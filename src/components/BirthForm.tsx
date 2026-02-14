@@ -55,7 +55,7 @@ export default function BirthForm({ onSubmit }: Props) {
         <div className="w-full min-w-0">
           {/* 생년월일 */}
           <fieldset>
-            <legend className="text-xs font-medium text-gray-500 mb-2">생년월일</legend>
+            <legend className="text-xs font-medium text-gray-500 mb-2">생년월일 (양력)</legend>
             <div className="grid grid-cols-3 gap-2">
               <select
                 value={year}
