@@ -39,6 +39,12 @@ export default function App() {
         </svg>
       </a>
       <main className="max-w-2xl mx-auto px-4 py-6">
+        <div className="text-center mb-6">
+          <p className="text-sm text-gray-500 tracking-wide">
+            서버 없이 브라우저에서 동작하는 <span className="font-medium text-gray-700">사주팔자 · 자미두수</span> 계산기
+          </p>
+          <p className="text-xs text-gray-400 mt-1">십신, 대운, 명반, 사화까지 한 번에</p>
+        </div>
         <BirthForm onSubmit={handleSubmit} />
 
         {birthInput && (
