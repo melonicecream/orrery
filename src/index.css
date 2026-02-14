@@ -11,7 +11,8 @@
 body {
   margin: 0;
   font-family:
-    'Noto Sans KR', 'Noto Sans CJK KR',
+    'Pretendard Variable', Pretendard,
+    'Noto Sans KR',
     'Apple SD Gothic Neo', 'Malgun Gothic',
     sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -20,8 +21,9 @@ body {
 
 .font-hanja {
   font-family:
-    'Noto Serif CJK KR', 'Noto Serif KR',
-    'Batang', 'SimSun', serif;
+    'Noto Sans KR',
+    'Apple SD Gothic Neo', 'Malgun Gothic',
+    sans-serif;
 }
 
 .el-wood { color: var(--color-wood); }

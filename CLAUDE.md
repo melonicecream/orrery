@@ -69,5 +69,6 @@ Python에서 TypeScript로 포팅 시 주의:
 ## Conventions
 
 - 한국어 UI, 한자 술어
-- CJK 폰트: Noto Sans KR, Apple SD Gothic Neo 우선
+- 기본 폰트: Pretendard (한글/라틴), Noto Sans KR (한자 fallback)
+- `.font-hanja` 클래스: Noto Sans KR (한자 전용)
 - 오행 색상: 木=green, 火=red, 土=yellow, 金=gray, 水=blue
