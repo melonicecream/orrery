@@ -1,5 +1,6 @@
-import { useState } from 'react'
+import { useState, useMemo } from 'react'
 import type { BirthInput, Gender } from '@orrery/core/types'
+import { isKoreanDaylightTime } from '@orrery/core/natal'
 import type { City } from '@orrery/core/cities'
 import { SEOUL } from '@orrery/core/cities'
 import CityCombobox from './CityCombobox.tsx'
@@ -59,6 +60,8 @@ export default function BirthForm({ onSubmit }: Props) {
   const [manualCoords, setManualCoords] = useState(saved?.manualCoords ?? false)
   const [latitude, setLatitude] = useState(saved?.latitude ?? SEOUL.lat)
   const [longitude, setLongitude] = useState(saved?.longitude ?? SEOUL.lon)
+
+  const isKDT = useMemo(() => isKoreanDaylightTime(year, month, day), [year, month, day])
 
   function handleCitySelect(city: City) {
     setSelectedCity(city)
@@ -133,6 +136,12 @@ export default function BirthForm({ onSubmit }: Props) {
               </select>
             </div>
           </fieldset>
+
+          {isKDT && (
+            <div className="mt-2 px-3 py-2 bg-amber-50 border border-amber-200 rounded-lg text-xs text-amber-700 leading-relaxed">
+              88올림픽 하계표준시(KDT, UTC+10) 적용 기간입니다. 모든 계산에 자동 반영됩니다.
+            </div>
+          )}
 
           {/* 시간 + 성별 */}
           <fieldset className="mt-4">

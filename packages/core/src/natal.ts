@@ -10,6 +10,8 @@ import type {
   NatalHouse, NatalAngles, AspectType, NatalAspect, NatalChart,
 } from './types.ts'
 
+export { isKoreanDaylightTime } from './kdt.ts'
+
 // =============================================
 // 상수
 // =============================================
@@ -166,6 +168,24 @@ function findHouse(planetLon: number, cusps: Float64Array): number {
   return 1
 }
 
+/** 특정 UTC 시각에서 주어진 타임존의 오프셋(분 단위)을 반환 */
+function getTimezoneOffsetMinutes(date: Date, timezone: string): number {
+  const utcStr = date.toLocaleString('en-US', { timeZone: 'UTC' })
+  const tzStr = date.toLocaleString('en-US', { timeZone: timezone })
+  return (new Date(tzStr).getTime() - new Date(utcStr).getTime()) / 60_000
+}
+
+/** 한국 현지 시각 → UTC 오프셋(시간)을 반환. KST=9, KDT=10. */
+function getSeoulUtcOffsetHours(
+  year: number, month: number, day: number,
+  hour: number, minute: number,
+): number {
+  // KST(+9)를 초기 추정치로 사용하여 UTC 시각을 근사
+  const guessUtcMs = Date.UTC(year, month - 1, day, hour, minute) - 9 * 3_600_000
+  const offsetMin = getTimezoneOffsetMinutes(new Date(guessUtcMs), 'Asia/Seoul')
+  return offsetMin / 60
+}
+
 /** 모든 행성 쌍의 메이저 애스펙트 계산 */
 function calculateAspects(planets: PlanetPosition[]): NatalAspect[] {
   const aspects: NatalAspect[] = []
@@ -202,8 +222,11 @@ export async function calculateNatal(input: BirthInput, houseSystem = 'P'): Prom
   const lat = input.latitude ?? DEFAULT_LAT
   const lon = input.longitude ?? DEFAULT_LON
 
-  // KST(+9) → UT 변환
-  const utHourDecimal = input.hour + input.minute / 60 - 9 // UTC = KST - 9
+  // 한국 현지 시각 → UT 변환 (KST=+9, KDT=+10)
+  const offsetHours = getSeoulUtcOffsetHours(
+    input.year, input.month, input.day, input.hour, input.minute,
+  )
+  const utHourDecimal = input.hour + input.minute / 60 - offsetHours
   let utYear = input.year
   let utMonth = input.month
   let utDay = input.day

@@ -6,6 +6,7 @@ import {
   getTwelveMeteor, getTwelveSpirit, getHiddenStems, analyzeAllRelations, getSpecialSals,
 } from './pillars.ts';
 import { STEM_INFO } from './constants.ts';
+import { adjustKdtToKst } from './kdt.ts';
 import type {
   BirthInput, SajuResult, PillarDetail, Pillar, DaewoonItem,
 } from './types.ts';
@@ -18,7 +19,10 @@ function getSipsin(dayStem: string, targetStem: string): string {
 
 /** BirthInput → SajuResult */
 export function calculateSaju(input: BirthInput): SajuResult {
-  const { year, month, day, hour, minute, gender } = input;
+  // KDT(하계표준시) → KST 보정
+  const kst = adjustKdtToKst(input.year, input.month, input.day, input.hour, input.minute);
+  const { year, month, day, hour, minute } = kst;
+  const { gender } = input;
   const isMale = gender === 'M';
 
   // 사주 계산 (년, 월, 일, 시)

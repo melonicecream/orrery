@@ -9,7 +9,7 @@ export interface PillarFixture {
 
 export const PILLAR_FIXTURES: PillarFixture[] = [
   { year: 1993, month: 3, day: 12, hour: 9, minute: 45, expected: { year: '癸酉', month: '乙卯', day: '壬辰', hour: '乙巳' } },
-  { year: 1987, month: 8, day: 23, hour: 4, minute: 10, expected: { year: '丁卯', month: '戊申', day: '甲辰', hour: '丙寅' } },
+  { year: 1987, month: 8, day: 23, hour: 4, minute: 10, expected: { year: '丁卯', month: '戊申', day: '甲辰', hour: '乙丑' } }, // KDT 보정: 04:10→03:10 KST
   { year: 1995, month: 12, day: 30, hour: 18, minute: 55, expected: { year: '乙亥', month: '戊子', day: '乙未', hour: '乙酉' } },
   { year: 1978, month: 10, day: 14, hour: 21, minute: 0, expected: { year: '戊午', month: '壬戌', day: '己酉', hour: '甲戌' } },
   { year: 2001, month: 11, day: 7, hour: 15, minute: 20, expected: { year: '辛巳', month: '戊戌', day: '甲戌', hour: '辛未' } },
@@ -67,14 +67,15 @@ export const NATAL_FIXTURES: NatalFixture[] = [
     },
   },
   {
+    // KDT 기간 (1987-05-10 ~ 1987-10-11, UTC+10)
     year: 1987, month: 8, day: 23, hour: 4, minute: 10,
     expected: {
-      asc: { lon: 127.5375, sign: 'Leo' },
-      mc: { lon: 27.1074, sign: 'Aries' },
-      sun: { lon: 149.1567, sign: 'Leo', house: 2 },
-      moon: { lon: 130.4845, sign: 'Leo', house: 1 },
-      mercury: { lon: 151.7648, isRetrograde: false },
-      northNode: { lon: 4.115, sign: 'Aries' },
+      asc: { lon: 115.3605, sign: 'Cancer' },
+      mc: { lon: 11.004, sign: 'Aries' },
+      sun: { lon: 149.1165, sign: 'Leo', house: 2 },
+      moon: { lon: 129.9893, sign: 'Leo', house: 1 },
+      mercury: { lon: 151.6833, isRetrograde: false },
+      northNode: { lon: 4.1172, sign: 'Aries' },
     },
   },
   {
@@ -174,6 +175,18 @@ export const NATAL_FIXTURES: NatalFixture[] = [
       moon: { lon: 216.1668, sign: 'Scorpio', house: 7 },
       mercury: { lon: 352.8247, isRetrograde: false },
       northNode: { lon: 25.1991, sign: 'Aries' },
+    },
+  },
+  {
+    // KDT 기간 (1987-05-10 ~ 1987-10-11, UTC+10) — ASC 검증용
+    year: 1987, month: 9, day: 21, hour: 12, minute: 40,
+    expected: {
+      asc: { lon: 241.9175, sign: 'Sagittarius' },
+      mc: { lon: 165.3874, sign: 'Virgo' },
+      sun: { lon: 177.5912, sign: 'Virgo', house: 10 },
+      moon: { lon: 154.7564, sign: 'Virgo', house: 9 },
+      mercury: { lon: 200.2644, isRetrograde: false },
+      northNode: { lon: 2.5626, sign: 'Aries' },
     },
   },
 ]

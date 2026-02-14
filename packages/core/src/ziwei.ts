@@ -16,6 +16,7 @@ import type {
   WuXingJu, ZiweiStar, ZiweiPalace, ZiweiChart,
   LiuYueInfo, LiuNianInfo,
 } from './types.ts'
+import { adjustKdtToKst } from './kdt.ts'
 
 // =============================================
 // 유틸리티
@@ -244,6 +245,11 @@ export function createChart(
   year: number, month: number, day: number,
   hour: number, minute: number, isMale: boolean,
 ): ZiweiChart {
+  // KDT(하계표준시) → KST 보정
+  const kst = adjustKdtToKst(year, month, day, hour, minute)
+  year = kst.year; month = kst.month; day = kst.day
+  hour = kst.hour; minute = kst.minute
+
   // 1. 음력 변환
   const { lunarYear, lunarMonth, lunarDay, isLeap } = solarToLunar(year, month, day)
 
