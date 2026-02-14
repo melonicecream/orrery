@@ -2,7 +2,7 @@
 
 ## Project Overview
 
-Orrery는 브라우저 기반 명리학 도구입니다. 사주팔자(四柱八字)와 자미두수(紫微斗數)를 백엔드 없이 클라이언트에서 계산합니다.
+Orrery는 브라우저 기반 명리학 도구입니다. 사주팔자(四柱八字), 자미두수(紫微斗數), 서양 점성술 출생차트(Natal Chart)를 백엔드 없이 클라이언트에서 계산합니다.
 
 ## Commands
 
@@ -29,30 +29,34 @@ src/
 │   ├── constants.ts # 모든 상수/룩업 테이블
 │   ├── pillars.ts  # 사주 계산 엔진 (60갑자, 절기, 대운)
 │   ├── saju.ts     # 사주 결과 조립 (십신, 운성)
-│   └── ziwei.ts    # 자미두수 계산 엔진 (명반 생성)
+│   ├── ziwei.ts    # 자미두수 계산 엔진 (명반 생성)
+│   └── natal.ts    # 서양 점성술 계산 엔진 (swisseph-wasm)
 ├── components/
 │   ├── App.tsx     # 루트: 탭 네비게이션 + 상태
 │   ├── BirthForm.tsx # 생년월일시/성별 입력 폼
 │   ├── CopyButton.tsx # 클립보드 복사
 │   ├── saju/       # 사주 UI 컴포넌트
-│   └── ziwei/      # 자미두수 UI 컴포넌트
+│   ├── ziwei/      # 자미두수 UI 컴포넌트
+│   └── natal/      # 출생차트 UI 컴포넌트
 ├── utils/
 │   ├── format.ts   # CJK 포매팅 헬퍼
 │   └── text-export.ts # 복사용 텍스트 생성
 └── tests/
     ├── fixtures.ts # Python 기준 참조 데이터
     ├── pillars.test.ts
-    └── ziwei.test.ts
+    ├── ziwei.test.ts
+    └── natal.test.ts
 ```
 
 ## Tech Stack
 
-- React 18 + TypeScript 5 (strict mode)
-- Vite 5 (빌드/개발 서버)
+- React 19 + TypeScript 5 (strict mode)
+- Vite 7 (빌드/개발 서버)
 - Tailwind CSS 4 (스타일링)
 - bun (패키지 매니저)
 - Vitest (테스트)
 - lunar-javascript (음력 변환)
+- swisseph-wasm (Swiss Ephemeris WASM, 서양 점성술)
 
 ## 포팅 주의사항
 
