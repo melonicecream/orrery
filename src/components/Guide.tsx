@@ -86,7 +86,7 @@ export default function Guide() {
             </dd>
           </div>
           <div>
-            <dt className="font-medium text-gray-700">출생차트(출생차트)</dt>
+            <dt className="font-medium text-gray-700">Natal Chart(출생차트)</dt>
             <dd className="mt-1">
               태어난 순간의 하늘에서 태양·달·행성들이 어떤 별자리(12궁)에 위치했는지를 기록한 서양 점성술의 기본 차트입니다.
               고대 그리스·로마 시대에 체계화되어 약 2,000년의 역사를 가지며, 현대에도 서양 문화권에서 널리 활용됩니다.

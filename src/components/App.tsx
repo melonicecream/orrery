@@ -61,7 +61,7 @@ export default function App() {
                 }`}
                 onClick={() => setTab('saju')}
               >
-                四柱八字
+                사주팔자
               </button>
               <button
                 className={`px-4 py-2 text-sm font-medium border-b-2 transition-colors ${
@@ -71,7 +71,7 @@ export default function App() {
                 }`}
                 onClick={() => setTab('ziwei')}
               >
-                紫微斗數
+                자미두수
               </button>
               <button
                 className={`px-4 py-2 text-sm font-medium border-b-2 transition-colors ${
@@ -81,7 +81,7 @@ export default function App() {
                 }`}
                 onClick={() => setTab('natal')}
               >
-                Natal Chart
+                출생차트
               </button>
               <div className="ml-auto pb-1">
                 <CopyButton
