@@ -3,6 +3,7 @@ import { calculateNatal, HOUSE_SYSTEMS } from '../../core/natal.ts'
 import PlanetTable from './PlanetTable.tsx'
 import HouseTable from './HouseTable.tsx'
 import AspectGrid from './AspectGrid.tsx'
+import NatalWheel from './wheel/NatalWheel.tsx'
 import CopyButton from '../CopyButton.tsx'
 import { natalToText } from '../../utils/text-export.ts'
 import type { BirthInput, NatalChart } from '../../core/types.ts'
@@ -82,6 +83,11 @@ export default function NatalView({ input }: Props) {
 
   return (
     <div className="space-y-6">
+      {/* Wheel Chart */}
+      <div className="bg-white rounded-lg border border-gray-200 p-4">
+        <NatalWheel chart={chart} />
+      </div>
+
       {/* Planets + Angles */}
       <section className="bg-white rounded-lg border border-gray-200 p-4">
         <div className="flex items-center justify-between mb-3">
