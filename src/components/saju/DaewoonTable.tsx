@@ -4,6 +4,7 @@ import { stemColorClass, branchColorClass, stemSolidBgClass, branchSolidBgClass 
 
 interface Props {
   daewoon: DaewoonItem[]
+  unknownTime?: boolean
 }
 
 function findActiveDaewoonIndex(daewoon: DaewoonItem[]): number {
@@ -17,12 +18,12 @@ function findActiveDaewoonIndex(daewoon: DaewoonItem[]): number {
   return activeIdx
 }
 
-export default function DaewoonTable({ daewoon }: Props) {
+export default function DaewoonTable({ daewoon, unknownTime }: Props) {
   if (daewoon.length === 0) {
     return (
       <section>
         <h3 className="text-sm font-medium text-gray-700 mb-2">大運</h3>
-        <p className="text-sm text-gray-400">대운 계산에는 출생 시간이 필요합니다.</p>
+        <p className="text-sm text-gray-400">대운 데이터가 없습니다.</p>
       </section>
     )
   }
@@ -42,6 +43,11 @@ export default function DaewoonTable({ daewoon }: Props) {
   return (
     <section>
       <h3 className="text-sm font-medium text-gray-700 mb-2">大運</h3>
+      {unknownTime && (
+        <p className="text-xs text-amber-600 mb-2">
+          출생 시간 없이 정오(12:00) 기준으로 계산하여 대운 시작 시기에 수개월 오차가 있을 수 있습니다.
+        </p>
+      )}
       <div ref={scrollRef} className="overflow-x-auto py-1">
         <div className="flex flex-row-reverse gap-2 w-fit font-hanja">
           {daewoon.map((dw, i) => {

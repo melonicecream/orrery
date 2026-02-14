@@ -89,7 +89,7 @@ export function sajuToText(result: SajuResult): string {
 
   // 대운
   if (daewoon.length > 0) {
-    lines.push('大運')
+    lines.push(input.unknownTime ? '大運 (시간 모름 — 정오 기준, 시작 시기 수개월 오차 가능)' : '大運')
     lines.push('─────')
     for (const dw of daewoon) {
       lines.push(`${String(dw.index).padStart(2)}運 (${String(dw.age).padStart(2)}세)  ${fmt2(dw.stemSipsin)}  ${dw.ganzi}  ${fmt2(dw.branchSipsin)}  (${dw.startDate.getFullYear()}年)`)

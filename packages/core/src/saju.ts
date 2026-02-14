@@ -70,10 +70,10 @@ export function calculateSaju(input: BirthInput): SajuResult {
     };
   });
 
-  // 대운 계산
-  const rawDaewoon = input.unknownTime
-    ? []
-    : getDaewoon(isMale, year, month, day, hour, minute);
+  // 대운 계산 (시간 모름이면 정오 기준)
+  const dwHour = input.unknownTime ? 12 : hour;
+  const dwMinute = input.unknownTime ? 0 : minute;
+  const rawDaewoon = getDaewoon(isMale, year, month, day, dwHour, dwMinute);
 
   const yearBranch = yp[1];
 

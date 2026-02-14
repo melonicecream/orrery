@@ -44,7 +44,7 @@ export default function SajuView({ input }: Props) {
 
       {/* 대운 */}
       <div className="bg-white rounded-lg border border-gray-200 p-4">
-        <DaewoonTable daewoon={result.daewoon} />
+        <DaewoonTable daewoon={result.daewoon} unknownTime={input.unknownTime} />
       </div>
 
       {/* 트랜짓 */}
