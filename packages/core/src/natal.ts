@@ -200,12 +200,17 @@ function calculateAspects(planets: PlanetPosition[]): NatalAspect[] {
 export async function calculateNatal(input: BirthInput, houseSystem = 'P'): Promise<NatalChart> {
   const lat = input.latitude ?? DEFAULT_LAT
   const lon = input.longitude ?? DEFAULT_LON
+  const unknownTime = !!input.unknownTime
+
+  // 시간 모름이면 정오(12:00) 기준으로 계산 (행성 오차 최소화)
+  const hour = unknownTime ? 12 : input.hour
+  const minute = unknownTime ? 0 : input.minute
 
   // 한국 현지 시각 → UT 변환 (KST=+9, KDT=+10)
   const offsetHours = getSeoulUtcOffsetHours(
-    input.year, input.month, input.day, input.hour, input.minute,
+    input.year, input.month, input.day, hour, minute,
   )
-  const utHourDecimal = input.hour + input.minute / 60 - offsetHours
+  const utHourDecimal = hour + minute / 60 - offsetHours
   let utYear = input.year
   let utMonth = input.month
   let utDay = input.day
@@ -226,8 +231,14 @@ export async function calculateNatal(input: BirthInput, houseSystem = 'P'): Prom
   }
   const jd = julday(utYear, utMonth, utDay, utHour)
 
-  // 하우스 계산
-  const { cusps, ascmc } = calcHouses(jd, lat, lon, houseSystem)
+  // 하우스 계산 (시간 모름이면 생략)
+  let cusps: number[] | null = null
+  let ascmc: number[] | null = null
+  if (!unknownTime) {
+    const houseResult = calcHouses(jd, lat, lon, houseSystem)
+    cusps = Array.from(houseResult.cusps)
+    ascmc = Array.from(houseResult.ascmc)
+  }
 
   // 행성 위치 계산
   const planets: PlanetPosition[] = []
@@ -241,7 +252,7 @@ export async function calculateNatal(input: BirthInput, houseSystem = 'P'): Prom
       sign: lonToSign(pos.longitude),
       degreeInSign: degreeInSign(pos.longitude),
       isRetrograde: pos.longitudeSpeed < 0,
-      house: findHouse(pos.longitude, cusps),
+      ...(cusps ? { house: findHouse(pos.longitude, cusps) } : {}),
     })
   }
 
@@ -256,31 +267,36 @@ export async function calculateNatal(input: BirthInput, houseSystem = 'P'): Prom
     sign: lonToSign(southLon),
     degreeInSign: degreeInSign(southLon),
     isRetrograde: false,
-    house: findHouse(southLon, cusps),
+    ...(cusps ? { house: findHouse(southLon, cusps) } : {}),
   })
 
   // 하우스 배열 구축
   const houses: NatalHouse[] = []
-  for (let i = 1; i <= 12; i++) {
-    const cuspLon = cusps[i]
-    houses.push({
-      number: i,
-      cuspLongitude: cuspLon,
-      sign: lonToSign(cuspLon),
-      degreeInSign: degreeInSign(cuspLon),
-    })
+  if (cusps) {
+    for (let i = 1; i <= 12; i++) {
+      const cuspLon = cusps[i]
+      houses.push({
+        number: i,
+        cuspLongitude: cuspLon,
+        sign: lonToSign(cuspLon),
+        degreeInSign: degreeInSign(cuspLon),
+      })
+    }
   }
 
   // 앵글
-  const ascLon = ascmc[0]
-  const mcLon = ascmc[1]
-  const descLon = normalizeDeg(ascLon + 180)
-  const icLon = normalizeDeg(mcLon + 180)
-  const angles: NatalAngles = {
-    asc: { longitude: ascLon, sign: lonToSign(ascLon), degreeInSign: degreeInSign(ascLon) },
-    mc: { longitude: mcLon, sign: lonToSign(mcLon), degreeInSign: degreeInSign(mcLon) },
-    desc: { longitude: descLon, sign: lonToSign(descLon), degreeInSign: degreeInSign(descLon) },
-    ic: { longitude: icLon, sign: lonToSign(icLon), degreeInSign: degreeInSign(icLon) },
+  let angles: NatalAngles | null = null
+  if (ascmc) {
+    const ascLon = ascmc[0]
+    const mcLon = ascmc[1]
+    const descLon = normalizeDeg(ascLon + 180)
+    const icLon = normalizeDeg(mcLon + 180)
+    angles = {
+      asc: { longitude: ascLon, sign: lonToSign(ascLon), degreeInSign: degreeInSign(ascLon) },
+      mc: { longitude: mcLon, sign: lonToSign(mcLon), degreeInSign: degreeInSign(mcLon) },
+      desc: { longitude: descLon, sign: lonToSign(descLon), degreeInSign: degreeInSign(descLon) },
+      ic: { longitude: icLon, sign: lonToSign(icLon), degreeInSign: degreeInSign(icLon) },
+    }
   }
 
   // 애스펙트 (SouthNode 제외 — 관례상 NorthNode만 사용)

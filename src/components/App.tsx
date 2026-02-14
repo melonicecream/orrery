@@ -92,9 +92,9 @@ export default function App() {
                     if (!birthInput.unknownTime) {
                       const chart = createChart(birthInput.year, birthInput.month, birthInput.day, birthInput.hour, birthInput.minute, birthInput.gender === 'M')
                       parts.push(ziweiToText(chart))
-                      const natal = await calculateNatal(birthInput)
-                      parts.push(natalToText(natal))
                     }
+                    const natal = await calculateNatal(birthInput)
+                    parts.push(natalToText(natal))
                     return parts.join('\n\n')
                   }}
                 />

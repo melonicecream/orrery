@@ -18,6 +18,8 @@ export default function NatalView({ input }: Props) {
   const [loading, setLoading] = useState(true)
   const [houseSystem, setHouseSystem] = useState('P')
 
+  const unknownTime = !!input.unknownTime
+
   useEffect(() => {
     let cancelled = false
     setLoading(true)
@@ -40,19 +42,6 @@ export default function NatalView({ input }: Props) {
 
     return () => { cancelled = true }
   }, [input, houseSystem])
-
-  if (input.unknownTime) {
-    return (
-      <div className="bg-amber-50 border border-amber-200 rounded-lg p-4">
-        <p className="text-sm text-amber-800 font-medium">
-          Natal Chart는 출생 시간이 필수입니다.
-        </p>
-        <p className="text-sm text-amber-600 mt-1">
-          시간 없이는 ASC(상승점), 하우스 배치를 계산할 수 없습니다.
-        </p>
-      </div>
-    )
-  }
 
   if (loading) {
     return (
@@ -83,39 +72,57 @@ export default function NatalView({ input }: Props) {
 
   return (
     <div className="space-y-6">
-      {/* Wheel Chart */}
-      <div className="bg-white rounded-lg border border-gray-200 p-4">
-        <NatalWheel chart={chart} />
-      </div>
+      {/* 시간 모름 안내 */}
+      {unknownTime && (
+        <div className="bg-amber-50 border border-amber-200 rounded-lg p-4">
+          <p className="text-sm text-amber-800 font-medium">
+            출생 시간 없이 정오(12:00) 기준으로 계산한 결과입니다.
+          </p>
+          <p className="text-sm text-amber-600 mt-1">
+            달은 최대 ±6° 오차가 있을 수 있으며, ASC · 하우스 배치는 표시하지 않습니다.
+          </p>
+        </div>
+      )}
+
+      {/* Wheel Chart — 시간 있을 때만 */}
+      {!unknownTime && (
+        <div className="bg-white rounded-lg border border-gray-200 p-4">
+          <NatalWheel chart={chart} />
+        </div>
+      )}
 
       {/* Planets + Angles */}
       <section className="bg-white rounded-lg border border-gray-200 p-4">
         <div className="flex items-center justify-between mb-3">
           <div className="flex items-center gap-1 sm:gap-3">
             <h2 className="text-sm font-medium text-gray-700">Natal Chart</h2>
-            <label className="flex items-center gap-1.5 text-xs text-gray-400 sm:ml-2">
-              House
-              <select
-                value={houseSystem}
-                onChange={e => setHouseSystem(e.target.value)}
-                className="border border-gray-200 rounded px-2 py-1 text-gray-600 bg-white focus:outline-none focus:ring-1 focus:ring-gray-400"
-              >
-              {HOUSE_SYSTEMS.map(([key, name]) => (
-                <option key={key} value={key}>{name}</option>
-              ))}
-              </select>
-            </label>
+            {!unknownTime && (
+              <label className="flex items-center gap-1.5 text-xs text-gray-400 sm:ml-2">
+                House
+                <select
+                  value={houseSystem}
+                  onChange={e => setHouseSystem(e.target.value)}
+                  className="border border-gray-200 rounded px-2 py-1 text-gray-600 bg-white focus:outline-none focus:ring-1 focus:ring-gray-400"
+                >
+                {HOUSE_SYSTEMS.map(([key, name]) => (
+                  <option key={key} value={key}>{name}</option>
+                ))}
+                </select>
+              </label>
+            )}
           </div>
           <CopyButton getText={() => natalToText(chart, houseSystemName)} label="AI 해석용 복사" />
         </div>
         <PlanetTable planets={chart.planets} angles={chart.angles} />
       </section>
 
-      {/* Houses */}
-      <div className="bg-white rounded-lg border border-gray-200 p-4">
-        <h3 className="text-xs font-medium text-gray-500 mb-2">Houses</h3>
-        <HouseTable houses={chart.houses} />
-      </div>
+      {/* Houses — 시간 있을 때만 */}
+      {!unknownTime && chart.houses.length > 0 && (
+        <div className="bg-white rounded-lg border border-gray-200 p-4">
+          <h3 className="text-xs font-medium text-gray-500 mb-2">Houses</h3>
+          <HouseTable houses={chart.houses} />
+        </div>
+      )}
 
       {/* Aspects */}
       <div className="bg-white rounded-lg border border-gray-200 p-4">

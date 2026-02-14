@@ -235,7 +235,8 @@ export interface PlanetPosition {
   sign: ZodiacSign;
   degreeInSign: number;
   isRetrograde: boolean;
-  house: number;
+  /** 하우스 번호 (시간 모름이면 undefined) */
+  house?: number;
 }
 
 /** 하우스 cusp */
@@ -271,6 +272,7 @@ export interface NatalChart {
   input: BirthInput;
   planets: PlanetPosition[];
   houses: NatalHouse[];
-  angles: NatalAngles;
+  /** 앵글 (시간 모름이면 null) */
+  angles: NatalAngles | null;
   aspects: NatalAspect[];
 }

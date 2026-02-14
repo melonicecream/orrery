@@ -211,18 +211,22 @@ export function ziweiToText(chart: ZiweiChart, liunian?: LiuNianInfo): string {
 /** Natal Chart를 텍스트로 변환 */
 export function natalToText(chart: NatalChart, houseSystemName = 'Placidus'): string {
   const lines: string[] = []
+  const hasHouses = chart.angles != null
 
   lines.push('Natal Chart')
+  if (!hasHouses) lines.push('(시간 모름 — 정오 기준, ASC·하우스 제외)')
   lines.push('═════')
   lines.push('')
 
   // Angles
-  lines.push('Angles')
-  lines.push('─────')
-  for (const [label, a] of [['ASC', chart.angles.asc], ['MC', chart.angles.mc]] as const) {
-    lines.push(`${label}  ${ZODIAC_SYMBOLS[a.sign]} ${a.sign} ${formatDegree(a.longitude)}`)
+  if (chart.angles) {
+    lines.push('Angles')
+    lines.push('─────')
+    for (const [label, a] of [['ASC', chart.angles.asc], ['MC', chart.angles.mc]] as const) {
+      lines.push(`${label}  ${ZODIAC_SYMBOLS[a.sign]} ${a.sign} ${formatDegree(a.longitude)}`)
+    }
+    lines.push('')
   }
-  lines.push('')
 
   // Planets
   lines.push('Planets')
@@ -231,17 +235,20 @@ export function natalToText(chart: NatalChart, houseSystemName = 'Placidus'): st
     const retro = p.isRetrograde ? ' R' : '  '
     const sym = PLANET_SYMBOLS[p.id]
     const signSym = ZODIAC_SYMBOLS[p.sign]
-    lines.push(`${sym} ${p.id.padEnd(10)} ${signSym} ${p.sign.padEnd(12)} ${formatDegree(p.longitude)}${retro} ${ROMAN[p.house - 1].padStart(5)}`)
+    const housePart = p.house != null ? ` ${ROMAN[p.house - 1].padStart(5)}` : ''
+    lines.push(`${sym} ${p.id.padEnd(10)} ${signSym} ${p.sign.padEnd(12)} ${formatDegree(p.longitude)}${retro}${housePart}`)
   }
   lines.push('')
 
   // Houses
-  lines.push(`Houses (${houseSystemName})`)
-  lines.push('─────')
-  for (const h of chart.houses) {
-    lines.push(`${ROMAN[h.number - 1].padStart(4)}  ${ZODIAC_SYMBOLS[h.sign]} ${h.sign.padEnd(12)} ${formatDegree(h.cuspLongitude)}`)
+  if (hasHouses && chart.houses.length > 0) {
+    lines.push(`Houses (${houseSystemName})`)
+    lines.push('─────')
+    for (const h of chart.houses) {
+      lines.push(`${ROMAN[h.number - 1].padStart(4)}  ${ZODIAC_SYMBOLS[h.sign]} ${h.sign.padEnd(12)} ${formatDegree(h.cuspLongitude)}`)
+    }
+    lines.push('')
   }
-  lines.push('')
 
   // Aspects
   lines.push('Major Aspects')
