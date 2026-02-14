@@ -149,6 +149,10 @@ export default function BirthForm({ onSubmit }: Props) {
           계산
         </button>
       </div>
+
+      <p className="mt-3 text-center text-xs text-gray-400">
+        🔒 모든 계산은 브라우저에서 처리되며, 입력하신 정보는 어떤 서버에도 전송되지 않습니다.
+      </p>
     </form>
   )
 }
