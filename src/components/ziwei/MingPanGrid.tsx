@@ -1,8 +1,6 @@
 import type { ZiweiChart, ZiweiPalace } from '../../core/types.ts'
 import { PALACE_NAMES, MAIN_STAR_NAMES, LUCKY_STAR_NAMES, SHA_STAR_NAMES, DI_ZHI } from '../../core/constants.ts'
 import { getDaxianList } from '../../core/ziwei.ts'
-import CopyButton from '../CopyButton.tsx'
-import { ziweiToText } from '../../utils/text-export.ts'
 
 interface Props {
   chart: ZiweiChart
@@ -142,11 +140,6 @@ export default function MingPanGrid({ chart }: Props) {
           className="border-r border-b border-gray-300 flex flex-col items-center justify-center p-3"
           style={{ gridRow: '2 / 4', gridColumn: '2 / 4' }}
         >
-          <div className="flex items-center gap-2 mb-3">
-            <h2 className="text-sm font-medium text-gray-700">紫微斗數 命盤</h2>
-            <CopyButton getText={() => ziweiToText(chart)} />
-          </div>
-
           <div className="space-y-0.5 text-xs text-gray-600 w-full max-w-[200px]">
             <div>
               <span className="text-gray-400">陽曆:</span>{' '}

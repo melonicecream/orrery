@@ -31,7 +31,7 @@ export default function DaewoonTable({ daewoon }: Props) {
   return (
     <section>
       <h3 className="text-sm font-medium text-gray-700 mb-2">大運</h3>
-      <div className="overflow-x-auto">
+      <div className="overflow-x-auto py-1">
         <div className="flex flex-row-reverse gap-1 w-fit font-hanja">
           {daewoon.map((dw, i) => {
             const isActive = i === activeIdx
