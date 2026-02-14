@@ -1,0 +1,37 @@
+@import "tailwindcss";
+
+:root {
+  --color-wood: #22c55e;
+  --color-fire: #ef4444;
+  --color-earth: #eab308;
+  --color-metal: #9ca3af;
+  --color-water: #3b82f6;
+}
+
+body {
+  margin: 0;
+  font-family:
+    'Noto Sans KR', 'Noto Sans CJK KR',
+    'Apple SD Gothic Neo', 'Malgun Gothic',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.font-hanja {
+  font-family:
+    'Noto Serif CJK KR', 'Noto Serif KR',
+    'Batang', 'SimSun', serif;
+}
+
+.el-wood { color: var(--color-wood); }
+.el-fire { color: var(--color-fire); }
+.el-earth { color: var(--color-earth); }
+.el-metal { color: var(--color-metal); }
+.el-water { color: var(--color-water); }
+
+.bg-el-wood { background-color: color-mix(in srgb, var(--color-wood) 15%, transparent); }
+.bg-el-fire { background-color: color-mix(in srgb, var(--color-fire) 15%, transparent); }
+.bg-el-earth { background-color: color-mix(in srgb, var(--color-earth) 15%, transparent); }
+.bg-el-metal { background-color: color-mix(in srgb, var(--color-metal) 15%, transparent); }
+.bg-el-water { background-color: color-mix(in srgb, var(--color-water) 15%, transparent); }

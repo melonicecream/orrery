@@ -1,0 +1,126 @@
+/**
+ * Python 기준 참조 데이터 (pillars.py, ziwei.py 실행 결과)
+ */
+
+export interface PillarFixture {
+  year: number; month: number; day: number; hour: number; minute: number;
+  expected: { year: string; month: string; day: string; hour: string };
+}
+
+export const PILLAR_FIXTURES: PillarFixture[] = [
+  { year: 1993, month: 3, day: 12, hour: 9, minute: 45, expected: { year: '癸酉', month: '乙卯', day: '壬辰', hour: '乙巳' } },
+  { year: 1987, month: 8, day: 23, hour: 4, minute: 10, expected: { year: '丁卯', month: '戊申', day: '甲辰', hour: '丙寅' } },
+  { year: 1995, month: 12, day: 30, hour: 18, minute: 55, expected: { year: '乙亥', month: '戊子', day: '乙未', hour: '乙酉' } },
+  { year: 1978, month: 10, day: 14, hour: 21, minute: 0, expected: { year: '戊午', month: '壬戌', day: '己酉', hour: '甲戌' } },
+  { year: 2001, month: 11, day: 7, hour: 15, minute: 20, expected: { year: '辛巳', month: '戊戌', day: '甲戌', hour: '辛未' } },
+  { year: 2010, month: 5, day: 1, hour: 10, minute: 15, expected: { year: '庚寅', month: '庚辰', day: '辛亥', hour: '癸巳' } },
+  { year: 1970, month: 1, day: 5, hour: 6, minute: 0, expected: { year: '己酉', month: '丙子', day: '乙酉', hour: '己卯' } },
+  { year: 1982, month: 7, day: 18, hour: 13, minute: 40, expected: { year: '壬戌', month: '丁未', day: '壬寅', hour: '丁未' } },
+  { year: 1999, month: 2, day: 14, hour: 8, minute: 20, expected: { year: '己卯', month: '丙寅', day: '丁酉', hour: '甲辰' } },
+  { year: 2005, month: 9, day: 30, hour: 22, minute: 45, expected: { year: '乙酉', month: '乙酉', day: '丁巳', hour: '辛亥' } },
+  { year: 1974, month: 4, day: 22, hour: 3, minute: 30, expected: { year: '甲寅', month: '戊辰', day: '癸巳', hour: '甲寅' } },
+  { year: 2015, month: 6, day: 8, hour: 16, minute: 0, expected: { year: '乙未', month: '壬午', day: '乙卯', hour: '甲申' } },
+  { year: 1991, month: 12, day: 1, hour: 11, minute: 10, expected: { year: '辛未', month: '己亥', day: '乙巳', hour: '辛巳' } },
+  { year: 2008, month: 3, day: 20, hour: 7, minute: 50, expected: { year: '戊子', month: '乙卯', day: '己未', hour: '戊辰' } },
+  { year: 1968, month: 11, day: 25, hour: 19, minute: 30, expected: { year: '戊申', month: '癸亥', day: '己亥', hour: '甲戌' } },
+  { year: 2020, month: 8, day: 15, hour: 14, minute: 0, expected: { year: '庚子', month: '甲申', day: '庚寅', hour: '癸未' } },
+  { year: 1985, month: 5, day: 10, hour: 6, minute: 30, expected: { year: '乙丑', month: '辛巳', day: '己酉', hour: '丁卯' } },
+  { year: 2003, month: 1, day: 28, hour: 5, minute: 15, expected: { year: '壬午', month: '癸丑', day: '辛丑', hour: '庚寅' } },
+  { year: 1976, month: 9, day: 3, hour: 17, minute: 20, expected: { year: '丙辰', month: '丙申', day: '戊午', hour: '庚申' } },
+  { year: 2012, month: 12, day: 21, hour: 23, minute: 0, expected: { year: '壬辰', month: '壬子', day: '丙辰', hour: '己亥' } },
+]
+
+export interface ZiweiFixture {
+  year: number; month: number; day: number; hour: number; minute: number; isMale: boolean;
+  expected: {
+    lunarYear: number; lunarMonth: number; lunarDay: number;
+    yearGanZhi: string;
+    mingGongZhi: string;
+    shenGongZhi: string;
+    wuXingJuName: string;
+    wuXingJuNumber: number;
+  };
+}
+
+export const ZIWEI_FIXTURES: ZiweiFixture[] = [
+  {
+    year: 1993, month: 3, day: 12, hour: 9, minute: 45, isMale: true,
+    expected: {
+      lunarYear: 1993, lunarMonth: 2, lunarDay: 20,
+      yearGanZhi: '癸酉', mingGongZhi: '戌', shenGongZhi: '申',
+      wuXingJuName: '水二局', wuXingJuNumber: 2,
+    },
+  },
+  {
+    year: 1987, month: 8, day: 23, hour: 4, minute: 10, isMale: true,
+    expected: {
+      lunarYear: 1987, lunarMonth: 6, lunarDay: 29,
+      yearGanZhi: '丁卯', mingGongZhi: '巳', shenGongZhi: '酉',
+      wuXingJuName: '火六局', wuXingJuNumber: 6,
+    },
+  },
+  {
+    year: 1978, month: 10, day: 14, hour: 21, minute: 0, isMale: false,
+    expected: {
+      lunarYear: 1978, lunarMonth: 9, lunarDay: 13,
+      yearGanZhi: '戊午', mingGongZhi: '亥', shenGongZhi: '酉',
+      wuXingJuName: '水二局', wuXingJuNumber: 2,
+    },
+  },
+  {
+    year: 2001, month: 11, day: 7, hour: 15, minute: 20, isMale: false,
+    expected: {
+      lunarYear: 2001, lunarMonth: 9, lunarDay: 22,
+      yearGanZhi: '辛巳', mingGongZhi: '寅', shenGongZhi: '午',
+      wuXingJuName: '木三局', wuXingJuNumber: 3,
+    },
+  },
+  {
+    year: 1982, month: 7, day: 18, hour: 13, minute: 40, isMale: true,
+    expected: {
+      lunarYear: 1982, lunarMonth: 5, lunarDay: 28,
+      yearGanZhi: '壬戌', mingGongZhi: '亥', shenGongZhi: '丑',
+      wuXingJuName: '金四局', wuXingJuNumber: 4,
+    },
+  },
+  {
+    year: 1999, month: 2, day: 14, hour: 8, minute: 20, isMale: false,
+    expected: {
+      lunarYear: 1998, lunarMonth: 12, lunarDay: 29,
+      yearGanZhi: '戊寅', mingGongZhi: '酉', shenGongZhi: '巳',
+      wuXingJuName: '木三局', wuXingJuNumber: 3,
+    },
+  },
+  {
+    year: 2005, month: 9, day: 30, hour: 22, minute: 45, isMale: true,
+    expected: {
+      lunarYear: 2005, lunarMonth: 8, lunarDay: 27,
+      yearGanZhi: '乙酉', mingGongZhi: '戌', shenGongZhi: '申',
+      wuXingJuName: '土五局', wuXingJuNumber: 5,
+    },
+  },
+  {
+    year: 2015, month: 6, day: 8, hour: 16, minute: 0, isMale: false,
+    expected: {
+      lunarYear: 2015, lunarMonth: 4, lunarDay: 22,
+      yearGanZhi: '乙未', mingGongZhi: '酉', shenGongZhi: '丑',
+      wuXingJuName: '水二局', wuXingJuNumber: 2,
+    },
+  },
+  {
+    year: 1991, month: 12, day: 1, hour: 11, minute: 10, isMale: true,
+    expected: {
+      lunarYear: 1991, lunarMonth: 10, lunarDay: 26,
+      yearGanZhi: '辛未', mingGongZhi: '巳', shenGongZhi: '巳',
+      wuXingJuName: '水二局', wuXingJuNumber: 2,
+    },
+  },
+  {
+    year: 2008, month: 3, day: 20, hour: 7, minute: 50, isMale: false,
+    expected: {
+      lunarYear: 2008, lunarMonth: 2, lunarDay: 13,
+      yearGanZhi: '戊子', mingGongZhi: '亥', shenGongZhi: '未',
+      wuXingJuName: '水二局', wuXingJuNumber: 2,
+    },
+  },
+]
