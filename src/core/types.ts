@@ -17,6 +17,10 @@ export interface BirthInput {
   gender: Gender;
   /** 시간 모름 여부 */
   unknownTime?: boolean;
+  /** 위도 (기본값: 37.5194 서울) */
+  latitude?: number;
+  /** 경도 (기본값: 127.0992 서울) */
+  longitude?: number;
 }
 
 /** 천간 정보 */
@@ -204,4 +208,69 @@ export interface LiuNianInfo {
   daxianPalaceName: string;
   daxianAgeStart: number;
   daxianAgeEnd: number;
+}
+
+// =============================================
+// 서양 점성술 (Natal Chart) 타입
+// =============================================
+
+/** 12궁 별자리 */
+export type ZodiacSign =
+  | 'Aries' | 'Taurus' | 'Gemini' | 'Cancer'
+  | 'Leo' | 'Virgo' | 'Libra' | 'Scorpio'
+  | 'Sagittarius' | 'Capricorn' | 'Aquarius' | 'Pisces';
+
+/** 행성 ID */
+export type PlanetId =
+  | 'Sun' | 'Moon' | 'Mercury' | 'Venus' | 'Mars'
+  | 'Jupiter' | 'Saturn' | 'Uranus' | 'Neptune' | 'Pluto'
+  | 'Chiron' | 'NorthNode' | 'SouthNode';
+
+/** 행성 위치 */
+export interface PlanetPosition {
+  id: PlanetId;
+  longitude: number;
+  latitude: number;
+  speed: number;
+  sign: ZodiacSign;
+  degreeInSign: number;
+  isRetrograde: boolean;
+  house: number;
+}
+
+/** 하우스 cusp */
+export interface NatalHouse {
+  number: number;
+  cuspLongitude: number;
+  sign: ZodiacSign;
+  degreeInSign: number;
+}
+
+/** 앵글 (ASC, MC, DESC, IC) */
+export interface NatalAngles {
+  asc: { longitude: number; sign: ZodiacSign; degreeInSign: number };
+  mc: { longitude: number; sign: ZodiacSign; degreeInSign: number };
+  desc: { longitude: number; sign: ZodiacSign; degreeInSign: number };
+  ic: { longitude: number; sign: ZodiacSign; degreeInSign: number };
+}
+
+/** 애스펙트 종류 */
+export type AspectType = 'conjunction' | 'sextile' | 'square' | 'trine' | 'opposition';
+
+/** 애스펙트 */
+export interface NatalAspect {
+  planet1: PlanetId;
+  planet2: PlanetId;
+  type: AspectType;
+  angle: number;
+  orb: number;
+}
+
+/** 네이탈 차트 전체 결과 */
+export interface NatalChart {
+  input: BirthInput;
+  planets: PlanetPosition[];
+  houses: NatalHouse[];
+  angles: NatalAngles;
+  aspects: NatalAspect[];
 }

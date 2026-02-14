@@ -1,7 +1,8 @@
-import type { SajuResult, ZiweiChart, LiuNianInfo } from '../core/types.ts'
+import type { SajuResult, ZiweiChart, LiuNianInfo, NatalChart } from '../core/types.ts'
 import { ELEMENT_HANJA, PILLAR_NAMES, PALACE_NAMES, MAIN_STAR_NAMES } from '../core/constants.ts'
 import { getDaxianList } from '../core/ziwei.ts'
 import { formatRelation, fmt2 } from './format.ts'
+import { ZODIAC_SYMBOLS, PLANET_SYMBOLS, ASPECT_SYMBOLS, ROMAN, formatDegree } from '../core/natal.ts'
 
 /** 사주 결과를 CLI 형식 텍스트로 변환 */
 export function sajuToText(result: SajuResult): string {
@@ -202,6 +203,54 @@ export function ziweiToText(chart: ZiweiChart, liunian?: LiuNianInfo): string {
     for (const ly of liunian.liuyue) {
       lines.push(`${lunarMonthNames[ly.month - 1]} (${ly.mingGongZhi}): ${ly.natalPalaceName}`)
     }
+  }
+
+  return lines.join('\n')
+}
+
+/** Natal Chart를 텍스트로 변환 */
+export function natalToText(chart: NatalChart, houseSystemName = 'Placidus'): string {
+  const lines: string[] = []
+
+  lines.push('Natal Chart')
+  lines.push('═════')
+  lines.push('')
+
+  // Angles
+  lines.push('Angles')
+  lines.push('─────')
+  for (const [label, a] of [['ASC', chart.angles.asc], ['MC', chart.angles.mc]] as const) {
+    lines.push(`${label}  ${ZODIAC_SYMBOLS[a.sign]} ${a.sign} ${formatDegree(a.longitude)}`)
+  }
+  lines.push('')
+
+  // Planets
+  lines.push('Planets')
+  lines.push('─────')
+  for (const p of chart.planets) {
+    const retro = p.isRetrograde ? ' R' : '  '
+    const sym = PLANET_SYMBOLS[p.id]
+    const signSym = ZODIAC_SYMBOLS[p.sign]
+    lines.push(`${sym} ${p.id.padEnd(10)} ${signSym} ${p.sign.padEnd(12)} ${formatDegree(p.longitude)}${retro} ${ROMAN[p.house - 1].padStart(5)}`)
+  }
+  lines.push('')
+
+  // Houses
+  lines.push(`Houses (${houseSystemName})`)
+  lines.push('─────')
+  for (const h of chart.houses) {
+    lines.push(`${ROMAN[h.number - 1].padStart(4)}  ${ZODIAC_SYMBOLS[h.sign]} ${h.sign.padEnd(12)} ${formatDegree(h.cuspLongitude)}`)
+  }
+  lines.push('')
+
+  // Aspects
+  lines.push('Major Aspects')
+  lines.push('─────')
+  for (const a of chart.aspects.slice(0, 15)) {
+    const sym1 = PLANET_SYMBOLS[a.planet1]
+    const sym2 = PLANET_SYMBOLS[a.planet2]
+    const aspSym = ASPECT_SYMBOLS[a.type]
+    lines.push(`${sym1} ${a.planet1.padEnd(10)} ${aspSym} ${sym2} ${a.planet2.padEnd(10)} orb ${a.orb.toFixed(1)}°`)
   }
 
   return lines.join('\n')

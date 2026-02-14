@@ -5,4 +5,6 @@ import tailwindcss from '@tailwindcss/vite'
 export default defineConfig({
   base: '/orrery/',
   plugins: [react(), tailwindcss()],
+  optimizeDeps: { exclude: ['swisseph-wasm'] },
+  assetsInclude: ['**/*.wasm'],
 })

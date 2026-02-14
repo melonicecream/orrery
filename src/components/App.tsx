@@ -4,12 +4,14 @@ import Guide from './Guide.tsx'
 import CopyButton from './CopyButton.tsx'
 import SajuView from './saju/SajuView.tsx'
 import ZiweiView from './ziwei/ZiweiView.tsx'
+import NatalView from './natal/NatalView.tsx'
 import { calculateSaju } from '../core/saju.ts'
 import { createChart } from '../core/ziwei.ts'
-import { sajuToText, ziweiToText } from '../utils/text-export.ts'
+import { calculateNatal } from '../core/natal.ts'
+import { sajuToText, ziweiToText, natalToText } from '../utils/text-export.ts'
 import type { BirthInput } from '../core/types.ts'
 
-type Tab = 'saju' | 'ziwei'
+type Tab = 'saju' | 'ziwei' | 'natal'
 
 export default function App() {
   const [tab, setTab] = useState<Tab>('saju')
@@ -41,9 +43,9 @@ export default function App() {
       <main className="max-w-2xl mx-auto px-4 py-6">
         <div className="text-center mb-6">
           <p className="text-sm text-gray-500 tracking-wide">
-            서버 없이 브라우저에서 동작하는 <span className="font-medium text-gray-700">사주팔자 · 자미두수</span> 계산기
+            서버 없이 브라우저에서 동작하는 <span className="font-medium text-gray-700">사주팔자 · 자미두수 · 서양 점성술</span> 계산기
           </p>
-          <p className="text-xs text-gray-400 mt-1">십신, 대운, 명반, 사화까지 한 번에</p>
+          <p className="text-xs text-gray-400 mt-1">십신, 대운, 명반, 사화, 출생차트까지 한 번에</p>
         </div>
         <BirthForm onSubmit={handleSubmit} />
 
@@ -71,15 +73,27 @@ export default function App() {
               >
                 紫微斗數
               </button>
+              <button
+                className={`px-4 py-2 text-sm font-medium border-b-2 transition-colors ${
+                  tab === 'natal'
+                    ? 'border-gray-800 text-gray-800'
+                    : 'border-transparent text-gray-500 hover:text-gray-700'
+                }`}
+                onClick={() => setTab('natal')}
+              >
+                Natal Chart
+              </button>
               <div className="ml-auto pb-1">
                 <CopyButton
                   label="AI 해석용 전부 복사"
-                  getText={() => {
+                  getText={async () => {
                     const saju = calculateSaju(birthInput)
                     const parts = [sajuToText(saju)]
                     if (!birthInput.unknownTime) {
                       const chart = createChart(birthInput.year, birthInput.month, birthInput.day, birthInput.hour, birthInput.minute, birthInput.gender === 'M')
                       parts.push(ziweiToText(chart))
+                      const natal = await calculateNatal(birthInput)
+                      parts.push(natalToText(natal))
                     }
                     return parts.join('\n\n')
                   }}
@@ -89,6 +103,7 @@ export default function App() {
 
             {tab === 'saju' && <SajuView input={birthInput} />}
             {tab === 'ziwei' && <ZiweiView input={birthInput} />}
+            {tab === 'natal' && <NatalView input={birthInput} />}
           </>
         )}
 

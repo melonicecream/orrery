@@ -42,6 +42,54 @@ export interface ZiweiFixture {
   };
 }
 
+export interface NatalFixture {
+  year: number; month: number; day: number; hour: number; minute: number;
+  expected: {
+    asc: { lon: number; sign: string };
+    mc: { lon: number; sign: string };
+    sun: { lon: number; sign: string; house: number };
+    moon: { lon: number; sign: string; house: number };
+    mercury: { lon: number; isRetrograde: boolean };
+    northNode: { lon: number; sign: string };
+  };
+}
+
+export const NATAL_FIXTURES: NatalFixture[] = [
+  {
+    year: 1993, month: 3, day: 12, hour: 9, minute: 45,
+    expected: {
+      asc: { lon: 55.8952, sign: 'Taurus' },
+      mc: { lon: 305.6655, sign: 'Aquarius' },
+      sun: { lon: 351.456, sign: 'Pisces', house: 11 },
+      moon: { lon: 222.107, sign: 'Scorpio', house: 6 },
+      mercury: { lon: 345.7711, isRetrograde: true },
+      northNode: { lon: 256.7172, sign: 'Sagittarius' },
+    },
+  },
+  {
+    year: 1987, month: 8, day: 23, hour: 4, minute: 10,
+    expected: {
+      asc: { lon: 127.5375, sign: 'Leo' },
+      mc: { lon: 27.1074, sign: 'Aries' },
+      sun: { lon: 149.1567, sign: 'Leo', house: 2 },
+      moon: { lon: 130.4845, sign: 'Leo', house: 1 },
+      mercury: { lon: 151.7648, isRetrograde: false },
+      northNode: { lon: 4.115, sign: 'Aries' },
+    },
+  },
+  {
+    year: 1979, month: 6, day: 20, hour: 7, minute: 30,
+    expected: {
+      asc: { lon: 117.0191, sign: 'Cancer' },
+      mc: { lon: 13.2046, sign: 'Aries' },
+      sun: { lon: 88.0338, sign: 'Gemini', house: 12 },
+      moon: { lon: 32.9257, sign: 'Taurus', house: 10 },
+      mercury: { lon: 109.2758, isRetrograde: false },
+      northNode: { lon: 162.2261, sign: 'Virgo' },
+    },
+  },
+]
+
 export const ZIWEI_FIXTURES: ZiweiFixture[] = [
   {
     year: 1993, month: 3, day: 12, hour: 9, minute: 45, isMale: true,

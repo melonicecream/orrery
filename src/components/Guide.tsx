@@ -19,12 +19,12 @@ export default function Guide() {
           </li>
           <li className="flex gap-2">
             <span className="shrink-0 text-gray-400">2.</span>
-            <span><strong className="text-gray-700">계산</strong> 버튼을 누르면 사주팔자와 자미두수 결과가 나타납니다.</span>
+            <span><strong className="text-gray-700">계산</strong> 버튼을 누르면 사주팔자, 자미두수, 출생차트 결과가 나타납니다.</span>
           </li>
           <li className="flex gap-2">
             <span className="shrink-0 text-gray-400">3.</span>
             <span>
-              탭 우측의 <strong className="text-gray-700">AI 해석용 전부 복사</strong>를 누르면 사주팔자 + 자미두수 데이터가 한 번에 복사됩니다.
+              탭 우측의 <strong className="text-gray-700">AI 해석용 전부 복사</strong>를 누르면 사주팔자 + 자미두수 + 출생차트 데이터가 한 번에 복사됩니다.
               각 탭의 <strong className="text-gray-700">AI 해석용 복사</strong> 버튼으로 개별 복사도 가능합니다.
             </span>
           </li>
@@ -41,7 +41,7 @@ export default function Guide() {
           <div>
             <p className="text-xs font-medium text-gray-500 mb-1">성격 분석</p>
             <ExampleBox>
-              다음은 내 사주팔자와 자미두수 명반이야. 성격적 강점과 약점을 분석해줘.<br />
+              다음은 내 사주팔자, 자미두수 명반, 출생차트야. 성격적 강점과 약점을 분석해줘.<br />
               <span className="text-gray-400">[복사한 데이터 붙여넣기]</span>
             </ExampleBox>
           </div>
@@ -65,7 +65,7 @@ export default function Guide() {
 
       {/* 용어 설명 */}
       <section className="bg-white rounded-lg border border-gray-200 p-5">
-        <h3 className="text-sm font-medium text-gray-700 mb-3">사주팔자·자미두수란?</h3>
+        <h3 className="text-sm font-medium text-gray-700 mb-3">사주팔자·자미두수·출생차트란?</h3>
         <dl className="text-sm text-gray-600 space-y-4">
           <div>
             <dt className="font-medium text-gray-700">四柱八字(사주팔자)</dt>
@@ -83,6 +83,14 @@ export default function Guide() {
               북송 시대 진희이(陳希夷)가 창시한 것으로 전해지며 약 1,000년의 역사를 가집니다.
               대만과 홍콩에서 특히 인기가 높아 사주팔자보다 더 널리 활용되고 있으며,
               동양의 점성술이라 불릴 만큼 서양 점성술과 유사한 구조를 갖추고 있습니다.
+            </dd>
+          </div>
+          <div>
+            <dt className="font-medium text-gray-700">출생차트(출생차트)</dt>
+            <dd className="mt-1">
+              태어난 순간의 하늘에서 태양·달·행성들이 어떤 별자리(12궁)에 위치했는지를 기록한 서양 점성술의 기본 차트입니다.
+              고대 그리스·로마 시대에 체계화되어 약 2,000년의 역사를 가지며, 현대에도 서양 문화권에서 널리 활용됩니다.
+              행성 위치 외에도 상승점(ASC), 하우스 배치, 행성 간 각도(애스펙트)를 종합적으로 분석합니다.
             </dd>
           </div>
         </dl>

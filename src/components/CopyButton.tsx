@@ -1,7 +1,7 @@
 import { useState } from 'react'
 
 interface Props {
-  getText: () => string
+  getText: () => string | Promise<string>
   label?: string
 }
 
@@ -9,14 +9,15 @@ export default function CopyButton({ getText, label = '복사' }: Props) {
   const [copied, setCopied] = useState(false)
 
   async function handleClick() {
+    const text = await getText()
     try {
-      await navigator.clipboard.writeText(getText())
+      await navigator.clipboard.writeText(text)
       setCopied(true)
       setTimeout(() => setCopied(false), 2000)
     } catch {
       // fallback
       const textarea = document.createElement('textarea')
-      textarea.value = getText()
+      textarea.value = text
       document.body.appendChild(textarea)
       textarea.select()
       document.execCommand('copy')
