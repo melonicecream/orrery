@@ -6,23 +6,26 @@ const ROOT = join(import.meta.dirname, '..')
 const SOURCE = join(ROOT, 'icon-1024.png')
 
 const icons = [
-  { size: 512, output: 'src/assets/icon-512.png' },
-  { size: 256, output: 'src/assets/icon-256.png' },
-  { size: 180, output: 'public/apple-touch-icon.png' },
-  { size: 32, output: 'public/favicon-32.png' },
-  { size: 16, output: 'public/favicon-16.png' },
-] as const
+  { size: 512, output: 'src/assets/icon-512.png', trim: false },
+  { size: 256, output: 'src/assets/icon-256.png', trim: false },
+  { size: 180, output: 'public/apple-touch-icon.png', trim: true },
+  { size: 32, output: 'public/favicon-32.png', trim: true },
+  { size: 16, output: 'public/favicon-16.png', trim: true },
+]
 
 await mkdir(join(ROOT, 'src/assets'), { recursive: true })
 await mkdir(join(ROOT, 'public'), { recursive: true })
 
-for (const { size, output } of icons) {
+const original = await sharp(SOURCE).toBuffer()
+const trimmed = await sharp(SOURCE).trim().toBuffer()
+
+for (const { size, output, trim } of icons) {
   const dest = join(ROOT, output)
-  await sharp(SOURCE)
+  await sharp(trim ? trimmed : original)
     .resize(size, size, { fit: 'contain', background: { r: 0, g: 0, b: 0, alpha: 0 } })
     .png({ compressionLevel: 9 })
     .toFile(dest)
-  console.log(`${output} (${size}x${size})`)
+  console.log(`${output} (${size}x${size}${trim ? ', trimmed' : ''})`)
 }
 
 console.log('Done.')
