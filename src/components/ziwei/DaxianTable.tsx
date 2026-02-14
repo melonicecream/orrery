@@ -51,10 +51,10 @@ export default function DaxianTable({ chart }: Props) {
                   {dx.ageStart}-{dx.ageEnd}歲
                 </span>
                 <span className="text-xs text-gray-600">{dx.palaceName}</span>
-                <span className={`inline-block w-8 h-8 leading-8 text-center text-base rounded ${stemSolidBgClass(gan)}`}>
+                <span className={`inline-flex items-center justify-center w-8 h-8 leading-none text-base rounded pb-[2px] ${stemSolidBgClass(gan)}`}>
                   {gan}
                 </span>
-                <span className={`inline-block w-8 h-8 leading-8 text-center text-base rounded ${branchSolidBgClass(zhi)}`}>
+                <span className={`inline-flex items-center justify-center w-8 h-8 leading-none text-base rounded pb-[2px] ${branchSolidBgClass(zhi)}`}>
                   {zhi}
                 </span>
                 {dx.mainStars.length > 0 ? (

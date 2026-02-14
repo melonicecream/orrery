@@ -56,10 +56,10 @@ export default function DaewoonTable({ daewoon }: Props) {
               >
                 <span className="text-xs text-gray-500">{dw.age}세</span>
                 <span className={`text-xs ${stemColorClass(stem)}`}>{dw.stemSipsin}</span>
-                <span className={`inline-block w-8 h-8 leading-8 text-center text-base rounded ${stemSolidBgClass(stem)}`}>
+                <span className={`inline-flex items-center justify-center w-8 h-8 leading-none text-base rounded pb-[2px] ${stemSolidBgClass(stem)}`}>
                   {stem}
                 </span>
-                <span className={`inline-block w-8 h-8 leading-8 text-center text-base rounded ${branchSolidBgClass(branch)}`}>
+                <span className={`inline-flex items-center justify-center w-8 h-8 leading-none text-base rounded pb-[2px] ${branchSolidBgClass(branch)}`}>
                   {branch}
                 </span>
                 <span className={`text-xs ${branchColorClass(branch)}`}>{dw.branchSipsin}</span>

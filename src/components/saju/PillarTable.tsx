@@ -43,7 +43,7 @@ export default function PillarTable({ pillars, unknownTime }: Props) {
             <td className="pr-2 text-right text-xs text-gray-400">천간</td>
             {displayPillars.map((p, i) => (
               <td key={i} className="py-1 px-3">
-                <span className={`inline-block w-10 h-10 leading-10 rounded ${stemSolidBgClass(p.pillar.stem)}`}>
+                <span className={`inline-flex items-center justify-center w-10 h-10 leading-none rounded pb-[3px] ${stemSolidBgClass(p.pillar.stem)}`}>
                   {p.pillar.stem}
                 </span>
               </td>
@@ -55,7 +55,7 @@ export default function PillarTable({ pillars, unknownTime }: Props) {
             <td className="pr-2 text-right text-xs text-gray-400">지지</td>
             {displayPillars.map((p, i) => (
               <td key={i} className="py-1 px-3">
-                <span className={`inline-block w-10 h-10 leading-10 rounded ${branchSolidBgClass(p.pillar.branch)}`}>
+                <span className={`inline-flex items-center justify-center w-10 h-10 leading-none rounded pb-[3px] ${branchSolidBgClass(p.pillar.branch)}`}>
                   {p.pillar.branch}
                 </span>
               </td>
@@ -102,7 +102,7 @@ export default function PillarTable({ pillars, unknownTime }: Props) {
                   {[...p.jigang].map((ch, j) =>
                     ch === ' '
                       ? <span key={j} className="inline-block w-4" />
-                      : <span key={j} className={`inline-block w-4 text-center rounded-sm ${elementSolidBgClass(stemElement(ch))}`}>{ch}</span>
+                      : <span key={j} className={`inline-flex items-center justify-center w-4 h-4 leading-none rounded-sm pb-px ${elementSolidBgClass(stemElement(ch))}`}>{ch}</span>
                   )}
                 </span>
               </td>
