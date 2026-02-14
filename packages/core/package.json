@@ -1,7 +1,21 @@
 {
   "name": "@orrery/core",
-  "version": "0.1.0",
+  "version": "0.2.1",
   "type": "module",
+  "keywords": [
+    "saju",
+    "사주",
+    "四柱八字",
+    "bazi",
+    "four-pillars",
+    "ziwei",
+    "자미두수",
+    "紫微斗數",
+    "natal-chart",
+    "astrology",
+    "korean-astrology",
+    "chinese-astrology"
+  ],
   "exports": {
     ".": {
       "import": "./dist/index.js",
