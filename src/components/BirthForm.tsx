@@ -9,9 +9,35 @@ interface Props {
   onSubmit: (input: BirthInput) => void
 }
 
+const STORAGE_KEY = 'orrery-birth-input'
+
+interface SavedFormState {
+  year: number
+  month: number
+  day: number
+  hour: number
+  minute: number
+  gender: Gender
+  unknownTime: boolean
+  city: City | null
+  manualCoords: boolean
+  latitude: number
+  longitude: number
+}
+
+function loadSaved(): SavedFormState | null {
+  try {
+    const raw = localStorage.getItem(STORAGE_KEY)
+    if (!raw) return null
+    return JSON.parse(raw) as SavedFormState
+  } catch {
+    return null
+  }
+}
+
 const now = new Date()
 const currentYear = now.getFullYear()
-const defaultYear = currentYear - 20
+const saved = loadSaved()
 
 const selectClass =
   'w-full h-10 pl-3 pr-8 border border-gray-200 rounded-lg text-sm text-gray-800 bg-white ' +
@@ -22,17 +48,17 @@ const selectClass =
 
 
 export default function BirthForm({ onSubmit }: Props) {
-  const [year, setYear] = useState(defaultYear)
-  const [month, setMonth] = useState(now.getMonth() + 1)
-  const [day, setDay] = useState(now.getDate())
-  const [hour, setHour] = useState(now.getHours())
-  const [minute, setMinute] = useState(now.getMinutes())
-  const [gender, setGender] = useState<Gender>('M')
-  const [unknownTime, setUnknownTime] = useState(false)
-  const [selectedCity, setSelectedCity] = useState<City | null>(SEOUL)
-  const [manualCoords, setManualCoords] = useState(false)
-  const [latitude, setLatitude] = useState(SEOUL.lat)
-  const [longitude, setLongitude] = useState(SEOUL.lon)
+  const [year, setYear] = useState(saved?.year ?? currentYear - 20)
+  const [month, setMonth] = useState(saved?.month ?? now.getMonth() + 1)
+  const [day, setDay] = useState(saved?.day ?? now.getDate())
+  const [hour, setHour] = useState(saved?.hour ?? now.getHours())
+  const [minute, setMinute] = useState(saved?.minute ?? now.getMinutes())
+  const [gender, setGender] = useState<Gender>(saved?.gender ?? 'M')
+  const [unknownTime, setUnknownTime] = useState(saved?.unknownTime ?? false)
+  const [selectedCity, setSelectedCity] = useState<City | null>(saved?.city ?? SEOUL)
+  const [manualCoords, setManualCoords] = useState(saved?.manualCoords ?? false)
+  const [latitude, setLatitude] = useState(saved?.latitude ?? SEOUL.lat)
+  const [longitude, setLongitude] = useState(saved?.longitude ?? SEOUL.lon)
 
   function handleCitySelect(city: City) {
     setSelectedCity(city)
@@ -42,6 +68,11 @@ export default function BirthForm({ onSubmit }: Props) {
 
   function handleSubmit(e: React.FormEvent) {
     e.preventDefault()
+    const state: SavedFormState = {
+      year, month, day, hour, minute, gender, unknownTime,
+      city: selectedCity, manualCoords, latitude, longitude,
+    }
+    try { localStorage.setItem(STORAGE_KEY, JSON.stringify(state)) } catch { /* quota exceeded — ignore */ }
     onSubmit({
       year, month, day,
       hour: unknownTime ? 12 : hour,
