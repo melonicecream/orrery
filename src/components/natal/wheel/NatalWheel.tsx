@@ -18,6 +18,8 @@ interface Props {
 }
 
 export default function NatalWheel({ chart }: Props) {
+  if (!chart.angles) return null
+
   const ascLon = chart.angles.asc.longitude
 
   return (
