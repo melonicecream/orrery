@@ -7,11 +7,9 @@ import { formatRelation, fmt2 } from './format.ts'
 export function sajuToText(result: SajuResult): string {
   const { input, pillars, daewoon, relations, specialSals } = result
   const lines: string[] = []
-
   const genderChar = input.gender === 'M' ? '男' : '女'
-  lines.push(`${input.year}年 ${input.month}月 ${input.day}日 ${input.hour}時 ${input.minute}分 (${genderChar})`)
-  lines.push('')
-  lines.push('四柱八字')
+
+  lines.push(`四柱八字 (${genderChar})`)
   lines.push('─────')
 
   const displayPillars = input.unknownTime ? pillars.slice(1) : pillars
@@ -105,12 +103,8 @@ export function ziweiToText(chart: ZiweiChart, liunian?: LiuNianInfo): string {
   const lines: string[] = []
   const genderChar = chart.isMale ? '男' : '女'
 
-  lines.push('紫微斗數 命盤')
+  lines.push(`紫微斗數 命盤 (${genderChar})`)
   lines.push('═════')
-  lines.push('')
-  lines.push(`陽曆: ${chart.solarYear}年 ${chart.solarMonth}月 ${chart.solarDay}日 ${chart.hour}時 ${chart.minute}分`)
-  lines.push(`陰曆: ${chart.lunarYear}年 ${chart.lunarMonth}月 ${chart.lunarDay}日${chart.isLeapMonth ? ' (閏月)' : ''}`)
-  lines.push(`性別: ${genderChar}`)
   lines.push('')
   lines.push(`年柱: ${chart.yearGan}${chart.yearZhi}`)
 
