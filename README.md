@@ -101,4 +101,4 @@ console.log(`ASC: ${natal.angles.asc.sign}`)
 
 ## 라이선스
 
-MIT
+[AGPL-3.0](LICENSE)

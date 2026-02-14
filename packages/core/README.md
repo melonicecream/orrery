@@ -218,4 +218,4 @@ bun packages/core/examples/natal.ts
 
 ## 라이선스
 
-MIT
+[AGPL-3.0](../../LICENSE)
