@@ -66,14 +66,24 @@ export default function Guide() {
       {/* 용어 설명 */}
       <section className="bg-white rounded-lg border border-gray-200 p-5">
         <h3 className="text-sm font-medium text-gray-700 mb-3">사주팔자·자미두수란?</h3>
-        <dl className="text-sm text-gray-600 space-y-2">
+        <dl className="text-sm text-gray-600 space-y-4">
           <div>
-            <dt className="font-medium text-gray-700 inline">四柱八字(사주팔자)</dt>
-            <dd className="inline ml-1">— 태어난 연·월·일·시를 네 기둥(四柱), 여덟 글자(八字)로 표현하는 동양 명리학의 기본 체계입니다.</dd>
+            <dt className="font-medium text-gray-700">四柱八字(사주팔자)</dt>
+            <dd className="mt-1">
+              태어난 연·월·일·시를 네 기둥(四柱), 여덟 글자(八字)로 표현하는 동양 명리학의 기본 체계입니다.
+              중국 당나라 시대에 체계화되어 약 1,300년의 역사를 가지고 있으며,
+              한국·중국·일본 등 동아시아 전역에서 널리 쓰이고 있습니다.
+              특히 한국에서는 가장 대중적인 명리 체계로, 일상에서 흔히 접할 수 있습니다.
+            </dd>
           </div>
           <div>
-            <dt className="font-medium text-gray-700 inline">紫微斗數(자미두수)</dt>
-            <dd className="inline ml-1">— 태어난 시간을 바탕으로 12궁의 별 배치를 산출하여 운명을 분석하는 중국 전통 점성술입니다.</dd>
+            <dt className="font-medium text-gray-700">紫微斗數(자미두수)</dt>
+            <dd className="mt-1">
+              태어난 시간을 바탕으로 12궁에 별을 배치하여 운명을 분석하는 중국 전통 점성술입니다.
+              북송 시대 진희이(陳希夷)가 창시한 것으로 전해지며 약 1,000년의 역사를 가집니다.
+              대만과 홍콩에서 특히 인기가 높아 사주팔자보다 더 널리 활용되고 있으며,
+              동양의 점성술이라 불릴 만큼 서양 점성술과 유사한 구조를 갖추고 있습니다.
+            </dd>
           </div>
         </dl>
       </section>
