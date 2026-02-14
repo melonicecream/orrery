@@ -8,7 +8,8 @@
     "build": "tsc -b && vite build",
     "lint": "eslint .",
     "preview": "vite preview",
-    "generate-icons": "bun scripts/generate-icons.ts"
+    "generate-icons": "bun scripts/generate-icons.ts",
+    "generate-og-image": "bun scripts/generate-og-image.ts"
   },
   "dependencies": {
     "lunar-javascript": "^1.7.7",
