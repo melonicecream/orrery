@@ -1,5 +1,8 @@
 import { useState } from 'react'
 import type { BirthInput, Gender } from '../core/types.ts'
+import type { City } from '../core/cities.ts'
+import { SEOUL } from '../core/cities.ts'
+import CityCombobox from './CityCombobox.tsx'
 import logo from '../assets/icon-512.png'
 
 interface Props {
@@ -26,8 +29,16 @@ export default function BirthForm({ onSubmit }: Props) {
   const [minute, setMinute] = useState(now.getMinutes())
   const [gender, setGender] = useState<Gender>('M')
   const [unknownTime, setUnknownTime] = useState(false)
-  const [latitude, setLatitude] = useState(37.5194)
-  const [longitude, setLongitude] = useState(127.0992)
+  const [selectedCity, setSelectedCity] = useState<City | null>(SEOUL)
+  const [manualCoords, setManualCoords] = useState(false)
+  const [latitude, setLatitude] = useState(SEOUL.lat)
+  const [longitude, setLongitude] = useState(SEOUL.lon)
+
+  function handleCitySelect(city: City) {
+    setSelectedCity(city)
+    setLatitude(city.lat)
+    setLongitude(city.lon)
+  }
 
   function handleSubmit(e: React.FormEvent) {
     e.preventDefault()
@@ -153,30 +164,51 @@ export default function BirthForm({ onSubmit }: Props) {
 
           {/* 위치 (Natal Chart용) */}
           <fieldset className="mt-4">
-            <legend className="text-xs font-medium text-gray-500 mb-2">출생 위치 (Natal Chart)</legend>
-            <div className="grid grid-cols-2 gap-2">
-              <div>
-                <label className="block text-xs text-gray-400 mb-1">위도</label>
+            <div className="flex items-center justify-between mb-2">
+              <legend className="text-xs font-medium text-gray-500">출생 위치 (Natal Chart)</legend>
+              <label className="flex items-center gap-1.5 cursor-pointer">
                 <input
-                  type="number"
-                  step="0.0001"
-                  value={latitude}
-                  onChange={e => setLatitude(Number(e.target.value))}
-                  className="w-full h-10 px-3 border border-gray-200 rounded-lg text-sm text-gray-800 bg-white focus:outline-none focus:ring-2 focus:ring-gray-800/20 focus:border-gray-400 transition-all"
+                  type="checkbox"
+                  checked={manualCoords}
+                  onChange={e => {
+                    setManualCoords(e.target.checked)
+                    if (!e.target.checked && selectedCity) {
+                      setLatitude(selectedCity.lat)
+                      setLongitude(selectedCity.lon)
+                    }
+                  }}
+                  className="sr-only peer"
                 />
-              </div>
-              <div>
-                <label className="block text-xs text-gray-400 mb-1">경도</label>
-                <input
-                  type="number"
-                  step="0.0001"
-                  value={longitude}
-                  onChange={e => setLongitude(Number(e.target.value))}
-                  className="w-full h-10 px-3 border border-gray-200 rounded-lg text-sm text-gray-800 bg-white focus:outline-none focus:ring-2 focus:ring-gray-800/20 focus:border-gray-400 transition-all"
-                />
-              </div>
+                <div className="w-8 h-[18px] bg-gray-200 rounded-full peer-checked:bg-gray-800 relative transition-colors after:content-[''] after:absolute after:top-[3px] after:left-[3px] after:w-3 after:h-3 after:bg-white after:rounded-full after:transition-transform peer-checked:after:translate-x-3.5" />
+                <span className="text-xs text-gray-500">직접 입력</span>
+              </label>
             </div>
-            <p className="text-xs text-gray-400 mt-1">기본값: 서울 (37.5194, 127.0992)</p>
+            {manualCoords ? (
+              <div className="grid grid-cols-2 gap-2">
+                <div>
+                  <label className="block text-xs text-gray-400 mb-1">위도</label>
+                  <input
+                    type="number"
+                    step="0.0001"
+                    value={latitude}
+                    onChange={e => setLatitude(Number(e.target.value))}
+                    className="w-full h-10 px-3 border border-gray-200 rounded-lg text-sm text-gray-800 bg-white focus:outline-none focus:ring-2 focus:ring-gray-800/20 focus:border-gray-400 transition-all"
+                  />
+                </div>
+                <div>
+                  <label className="block text-xs text-gray-400 mb-1">경도</label>
+                  <input
+                    type="number"
+                    step="0.0001"
+                    value={longitude}
+                    onChange={e => setLongitude(Number(e.target.value))}
+                    className="w-full h-10 px-3 border border-gray-200 rounded-lg text-sm text-gray-800 bg-white focus:outline-none focus:ring-2 focus:ring-gray-800/20 focus:border-gray-400 transition-all"
+                  />
+                </div>
+              </div>
+            ) : (
+              <CityCombobox selectedCity={selectedCity} onSelect={handleCitySelect} />
+            )}
           </fieldset>
 
           {/* 계산 버튼 */}
