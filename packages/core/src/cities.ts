@@ -338,9 +338,18 @@ export const SEOUL = KOREAN_CITIES[0]
 // 검색 / 필터링
 // =============================================
 
-/** 도시 표시명 (예: "서울", "도쿄, 일본") */
+/** 동명 도시 집합 (예: '광주' — 광주광역시 vs 경기도 광주시) */
+const AMBIGUOUS_NAMES: ReadonlySet<string> = new Set(
+  KOREAN_CITIES
+    .map(c => c.name)
+    .filter((name, _, arr) => arr.indexOf(name) !== arr.lastIndexOf(name))
+)
+
+/** 도시 표시명 (예: "서울", "광주 (경기도)", "도쿄, 일본") */
 export function formatCityName(city: City): string {
-  return city.country ? `${city.name}, ${city.country}` : city.name
+  if (city.country) return `${city.name}, ${city.country}`
+  if (city.region && AMBIGUOUS_NAMES.has(city.name)) return `${city.name} (${city.region})`
+  return city.name
 }
 
 /** 쿼리로 도시 필터링 (최대 20개, 한국 도시 우선) */
