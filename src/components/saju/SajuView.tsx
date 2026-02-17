@@ -36,11 +36,9 @@ export default function SajuView({ input }: Props) {
       </div>
 
       {/* 신살 */}
-      {(result.specialSals.yangin.length > 0 || result.specialSals.baekho || result.specialSals.goegang) && (
-        <div className="bg-white rounded-lg border border-gray-200 p-4">
-          <SinsalList sals={result.specialSals} />
-        </div>
-      )}
+      <div className="bg-white rounded-lg border border-gray-200 p-4">
+        <SinsalList sals={result.specialSals} />
+      </div>
 
       {/* 대운 */}
       <div className="bg-white rounded-lg border border-gray-200 p-4">

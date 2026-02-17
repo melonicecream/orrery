@@ -75,12 +75,21 @@ if (result.relations.directional.length > 0) {
 // ── 신살 ──
 console.log('\n═══ 신살 ═══')
 const { specialSals } = result
-if (specialSals.yangin.length > 0) {
-  const positions = specialSals.yangin.map(i => PILLAR_NAMES[i]).join(', ')
-  console.log(`  양인살: ${positions}`)
-}
-if (specialSals.baekho) console.log('  백호살')
-if (specialSals.goegang) console.log('  괴강살')
-if (!specialSals.yangin.length && !specialSals.baekho && !specialSals.goegang) {
+const salEntries: string[] = []
+// 길신
+if (specialSals.cheonul.length > 0) salEntries.push(`천을귀인(${specialSals.cheonul.map(i => PILLAR_NAMES[i]).join(',')})`)
+if (specialSals.cheonduk.length > 0) salEntries.push(`천덕귀인(${specialSals.cheonduk.map(i => PILLAR_NAMES[i]).join(',')})`)
+if (specialSals.wolduk.length > 0) salEntries.push(`월덕귀인(${specialSals.wolduk.map(i => PILLAR_NAMES[i]).join(',')})`)
+if (specialSals.munchang.length > 0) salEntries.push(`문창귀인(${specialSals.munchang.map(i => PILLAR_NAMES[i]).join(',')})`)
+if (specialSals.geumyeo.length > 0) salEntries.push(`금여록(${specialSals.geumyeo.map(i => PILLAR_NAMES[i]).join(',')})`)
+// 흉신
+if (specialSals.yangin.length > 0) salEntries.push(`양인살(${specialSals.yangin.map(i => PILLAR_NAMES[i]).join(',')})`)
+if (specialSals.dohwa.length > 0) salEntries.push(`도화살(${specialSals.dohwa.map(i => PILLAR_NAMES[i]).join(',')})`)
+if (specialSals.baekho) salEntries.push('백호살')
+if (specialSals.goegang) salEntries.push('괴강살')
+if (specialSals.hongyeom) salEntries.push('홍염살')
+if (salEntries.length > 0) {
+  salEntries.forEach(e => console.log(`  ${e}`))
+} else {
   console.log('  (없음)')
 }

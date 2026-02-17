@@ -75,11 +75,25 @@ export function sajuToText(result: SajuResult): string {
 
   // 신살
   const salItems: string[] = []
-  if (specialSals.yangin.length > 0) {
+  // 길신
+  if (specialSals.cheonul.length > 0)
+    salItems.push(`천을귀인(${specialSals.cheonul.map(i => PILLAR_NAMES[i]).join(',')})`)
+  if (specialSals.cheonduk.length > 0)
+    salItems.push(`천덕귀인(${specialSals.cheonduk.map(i => PILLAR_NAMES[i]).join(',')})`)
+  if (specialSals.wolduk.length > 0)
+    salItems.push(`월덕귀인(${specialSals.wolduk.map(i => PILLAR_NAMES[i]).join(',')})`)
+  if (specialSals.munchang.length > 0)
+    salItems.push(`문창귀인(${specialSals.munchang.map(i => PILLAR_NAMES[i]).join(',')})`)
+  if (specialSals.geumyeo.length > 0)
+    salItems.push(`금여록(${specialSals.geumyeo.map(i => PILLAR_NAMES[i]).join(',')})`)
+  // 흉신
+  if (specialSals.yangin.length > 0)
     salItems.push(`양인살(${specialSals.yangin.map(i => PILLAR_NAMES[i]).join(',')})`)
-  }
+  if (specialSals.dohwa.length > 0)
+    salItems.push(`도화살(${specialSals.dohwa.map(i => PILLAR_NAMES[i]).join(',')})`)
   if (specialSals.baekho) salItems.push('백호살')
   if (specialSals.goegang) salItems.push('괴강살')
+  if (specialSals.hongyeom) salItems.push('홍염살')
   if (salItems.length > 0) {
     lines.push('神殺')
     lines.push('─────')

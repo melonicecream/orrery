@@ -111,6 +111,13 @@ export interface SpecialSals {
   yangin: number[];     // 양인살 위치 인덱스
   baekho: boolean;      // 백호살
   goegang: boolean;     // 괴강살
+  dohwa: number[];      // 도화살 위치 인덱스
+  cheonul: number[];    // 천을귀인 위치 인덱스
+  cheonduk: number[];   // 천덕귀인 위치 인덱스 (천간 또는 지지)
+  wolduk: number[];     // 월덕귀인 위치 인덱스 (천간)
+  munchang: number[];   // 문창귀인 위치 인덱스
+  hongyeom: boolean;    // 홍염살
+  geumyeo: number[];    // 금여록 위치 인덱스
 }
 
 /** 트랜짓 항목 */

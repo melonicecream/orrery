@@ -103,7 +103,7 @@ export function calculateSaju(input: BirthInput): SajuResult {
   const relations = analyzeAllRelations(ganzis);
 
   // 신살
-  const specialSals = getSpecialSals(dayStem, dp, branches);
+  const specialSals = getSpecialSals(stems, branches, dp);
 
   return {
     input,
