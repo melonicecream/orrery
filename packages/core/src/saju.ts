@@ -4,6 +4,7 @@
 import {
   getFourPillars, getDaewoon, getRelation, getJeonggi,
   getTwelveMeteor, getTwelveSpirit, getHiddenStems, analyzeAllRelations, getSpecialSals,
+  calculateJwabeop, calculateInjongbeop,
 } from './pillars.ts';
 import { STEM_INFO } from './constants.ts';
 import { adjustKdtToKst } from './kdt.ts';
@@ -105,11 +106,18 @@ export function calculateSaju(input: BirthInput): SajuResult {
   // 신살
   const specialSals = getSpecialSals(stems, branches, dp);
 
+  // 좌법 · 인종법
+  const dayBranch = dp[1];
+  const jwabeop = calculateJwabeop(dayStem, branches, dayBranch);
+  const injongbeop = calculateInjongbeop(dayStem, dayBranch);
+
   return {
     input,
     pillars,
     daewoon,
     relations,
     specialSals,
+    jwabeop,
+    injongbeop,
   };
 }

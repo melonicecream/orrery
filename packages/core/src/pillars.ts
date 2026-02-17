@@ -17,8 +17,8 @@ import {
   JIJANGGAN, METEOR_LOOKUP, PILLAR_NAMES,
 } from './constants.ts';
 import type {
-  Relation, RelationResult, PairRelation, AllRelations, SpecialSals,
-  TransitItem,
+  Element, Relation, RelationResult, PairRelation, AllRelations, SpecialSals,
+  TransitItem, JwaEntry, InjongEntry,
 } from './types.ts';
 
 // =============================================
@@ -554,6 +554,82 @@ export function getTwelveSpirit(yearBranch: string, targetBranch: string): strin
   if (targetIdx < 0) return '?';
   const offset = ((targetIdx - start) % 12 + 12) % 12;
   return SPIRITS_12[offset].hanja;
+}
+
+// =============================================
+// 좌법 · 인종법
+// =============================================
+
+/** 오행 → 양간 매핑 */
+const YANG_STEM_OF: Record<Element, string> = {
+  tree: '甲', fire: '丙', earth: '戊', metal: '庚', water: '壬',
+};
+
+/** 5가지 십성 카테고리 */
+const SIPSIN_CATEGORIES: Array<{ name: string; interactions: string[] }> = [
+  { name: '比劫', interactions: ['same'] },
+  { name: '食傷', interactions: ['output'] },
+  { name: '財星', interactions: ['sword'] },
+  { name: '官星', interactions: ['shield'] },
+  { name: '印星', interactions: ['input'] },
+];
+
+/** 좌법 계산: 각 주 지장간 → 일지에서의 운성 */
+export function calculateJwabeop(
+  dayStem: string, branches: string[], dayBranch: string,
+): JwaEntry[][] {
+  return branches.map(branch => {
+    const hidden = getHiddenStems(branch).replace(/ /g, '');
+    return [...hidden].map(stem => {
+      const rel = getRelation(dayStem, stem);
+      const sipsin = rel ? rel.hanja : '?';
+      const unseong = getTwelveMeteor(stem, dayBranch);
+      return { stem, sipsin, unseong };
+    });
+  });
+}
+
+/** 인종법 계산: 일지 지장간에 없는 십성 카테고리의 양간 인종 */
+export function calculateInjongbeop(
+  dayStem: string, dayBranch: string,
+): InjongEntry[] {
+  const dayInfo = STEM_INFO[dayStem];
+  if (!dayInfo) return [];
+
+  // 일지 지장간에 존재하는 오행 interaction 수집
+  const hidden = getHiddenStems(dayBranch).replace(/ /g, '');
+  const presentInteractions = new Set<string>();
+  for (const stem of hidden) {
+    const info = STEM_INFO[stem];
+    if (!info) continue;
+    const interaction = getInteraction(dayInfo.element, info.element);
+    if (interaction) presentInteractions.add(interaction);
+  }
+
+  // 누락 카테고리 → 양간 인종
+  const result: InjongEntry[] = [];
+  for (const cat of SIPSIN_CATEGORIES) {
+    const missing = cat.interactions.every(i => !presentInteractions.has(i));
+    if (!missing) continue;
+
+    // 해당 카테고리의 오행 찾기
+    let targetElement: Element | null = null;
+    for (const [el, info] of Object.entries(STEM_INFO)) {
+      if (info.yinyang !== '+') continue;
+      const inter = getInteraction(dayInfo.element, info.element);
+      if (inter && cat.interactions.includes(inter)) {
+        targetElement = info.element;
+        break;
+      }
+    }
+    if (!targetElement) continue;
+
+    const yangStem = YANG_STEM_OF[targetElement];
+    const unseong = getTwelveMeteor(yangStem, dayBranch);
+    result.push({ category: cat.name, yangStem, unseong });
+  }
+
+  return result;
 }
 
 // =============================================

@@ -3,6 +3,8 @@ import { calculateSaju } from '@orrery/core/saju'
 import PillarTable from './PillarTable.tsx'
 import RelationList from './RelationList.tsx'
 import SinsalList from './SinsalList.tsx'
+import JwabeopChart from './JwabeopChart.tsx'
+import InjongbeopChart from './InjongbeopChart.tsx'
 import DaewoonTable from './DaewoonTable.tsx'
 import TransitView from './TransitView.tsx'
 import CopyButton from '../CopyButton.tsx'
@@ -38,6 +40,12 @@ export default function SajuView({ input }: Props) {
       {/* 신살 */}
       <div className="bg-white rounded-lg border border-gray-200 p-4">
         <SinsalList sals={result.specialSals} />
+      </div>
+
+      {/* 좌법 · 인종법 */}
+      <div className="bg-white rounded-lg border border-gray-200 p-4 space-y-4">
+        <JwabeopChart jwabeop={result.jwabeop} pillars={result.pillars} unknownTime={input.unknownTime} />
+        <InjongbeopChart injongbeop={result.injongbeop} pillars={result.pillars} />
       </div>
 
       {/* 대운 */}

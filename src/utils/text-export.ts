@@ -101,6 +101,28 @@ export function sajuToText(result: SajuResult): string {
     lines.push('')
   }
 
+  // 좌법
+  if (result.jwabeop) {
+    lines.push('坐法 (지장간 → 일지 운성)')
+    lines.push('─────')
+    const pillarLabels = ['時柱', '日柱', '月柱', '年柱']
+    result.jwabeop.forEach((entries, i) => {
+      if (i === 0 && input.unknownTime) return
+      const parts = entries.map(e => `${e.stem}(${e.sipsin}·${e.unseong}坐)`).join(' ')
+      lines.push(`${pillarLabels[i]}: ${parts}`)
+    })
+    lines.push('')
+  }
+
+  // 인종법
+  if (result.injongbeop && result.injongbeop.length > 0) {
+    lines.push('引從法 (누락 십성 양간 인종)')
+    lines.push('─────')
+    const parts = result.injongbeop.map(e => `${e.yangStem} ${e.category} → ${e.unseong}從`)
+    lines.push(parts.join(' · '))
+    lines.push('')
+  }
+
   // 대운
   if (daewoon.length > 0) {
     lines.push(input.unknownTime ? '大運 (시간 모름 — 정오 기준, 시작 시기 수개월 오차 가능)' : '大運')

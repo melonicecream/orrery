@@ -120,6 +120,20 @@ export interface SpecialSals {
   geumyeo: number[];    // 금여록 위치 인덱스
 }
 
+/** 좌법 항목 (지장간 → 일지 운성) */
+export interface JwaEntry {
+  stem: string;       // 지장간 글자 (예: '戊')
+  sipsin: string;     // 십신 한자 (예: '正財')
+  unseong: string;    // 일지에서의 운성 한자 (예: '乾祿')
+}
+
+/** 인종법 항목 (일지에 없는 십성 카테고리) */
+export interface InjongEntry {
+  category: string;   // 십성 카테고리 (예: '比劫')
+  yangStem: string;   // 인종된 양간 (예: '甲')
+  unseong: string;    // 일지에서의 운성 (예: '病')
+}
+
 /** 트랜짓 항목 */
 export interface TransitItem {
   date: Date;
@@ -140,6 +154,10 @@ export interface SajuResult {
   relations: AllRelations;
   /** 신살 */
   specialSals: SpecialSals;
+  /** 좌법 (각 주 지장간 → 일지 운성) — 4주×N지장간 */
+  jwabeop: JwaEntry[][];
+  /** 인종법 (일지에 없는 십성 카테고리 인종) */
+  injongbeop: InjongEntry[];
 }
 
 // =============================================
