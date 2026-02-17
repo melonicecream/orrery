@@ -1,6 +1,6 @@
 function ExampleBox({ children }: { children: React.ReactNode }) {
   return (
-    <div className="bg-gray-50 rounded border border-gray-200 px-3 py-2 text-xs text-gray-600 leading-relaxed">
+    <div className="bg-white/60 rounded border border-dashed border-gray-200 px-3 py-2 text-xs text-gray-500 leading-relaxed">
       {children}
     </div>
   )
@@ -8,24 +8,28 @@ function ExampleBox({ children }: { children: React.ReactNode }) {
 
 export default function Guide() {
   return (
-    <div className="mt-8 space-y-4">
-      {/* 사용 방법 + AI 질문 예시 */}
-      <section className="bg-white rounded-lg border border-gray-200 p-5">
-        <h3 className="text-sm font-medium text-gray-700 mb-3">사용 방법</h3>
-        <ol className="text-sm text-gray-600 space-y-2 list-none pl-0">
+    <div className="mt-8">
+      <section className="rounded-lg border border-dashed border-gray-300 p-5 bg-gray-50/50">
+        <h3 className="text-sm font-medium text-gray-400 mb-3 flex items-center gap-1.5">
+          <svg className="w-4 h-4" viewBox="0 0 20 20" fill="currentColor">
+            <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zM8.94 6.94a.75.75 0 11-1.061-1.061 3 3 0 112.871 5.026v.345a.75.75 0 01-1.5 0v-.5c0-.72.57-1.172 1.081-1.287A1.5 1.5 0 108.94 6.94zM10 15a1 1 0 100-2 1 1 0 000 2z" clipRule="evenodd" />
+          </svg>
+          사용 방법
+        </h3>
+        <ol className="text-sm text-gray-500 space-y-2 list-none pl-0">
           <li className="flex gap-2">
             <span className="shrink-0 text-gray-400">1.</span>
             <span>위 폼에 생년월일, 태어난 시간, 성별을 입력합니다.</span>
           </li>
           <li className="flex gap-2">
             <span className="shrink-0 text-gray-400">2.</span>
-            <span><strong className="text-gray-700">계산</strong> 버튼을 누르면 사주팔자, 자미두수, 출생차트 결과가 나타납니다.</span>
+            <span><strong className="text-gray-600">계산</strong> 버튼을 누르면 사주팔자, 자미두수, 출생차트 결과가 나타납니다.</span>
           </li>
           <li className="flex gap-2">
             <span className="shrink-0 text-gray-400">3.</span>
             <span>
-              탭 우측의 <strong className="text-gray-700">AI 해석용 전부 복사</strong>를 누르면 사주팔자 + 자미두수 + 출생차트 데이터가 한 번에 복사됩니다.
-              각 탭의 <strong className="text-gray-700">AI 해석용 복사</strong> 버튼으로 개별 복사도 가능합니다.
+              탭 우측의 <strong className="text-gray-600">AI 해석용 전부 복사</strong>를 누르면 사주팔자 + 자미두수 + 출생차트 데이터가 한 번에 복사됩니다.
+              각 탭의 <strong className="text-gray-600">AI 해석용 복사</strong> 버튼으로 개별 복사도 가능합니다.
             </span>
           </li>
           <li className="flex gap-2">
@@ -34,26 +38,26 @@ export default function Guide() {
           </li>
         </ol>
 
-        <hr className="my-4 border-gray-100" />
+        <hr className="my-4 border-gray-200" />
 
-        <h4 className="text-xs font-medium text-gray-500 mb-3">AI에게 이렇게 물어보세요</h4>
+        <h4 className="text-xs font-medium text-gray-400 mb-3">AI에게 이렇게 물어보세요</h4>
         <div className="space-y-3">
           <div>
-            <p className="text-xs font-medium text-gray-500 mb-1">성격 분석</p>
+            <p className="text-xs font-medium text-gray-400 mb-1">성격 분석</p>
             <ExampleBox>
               다음은 내 사주팔자, 자미두수 명반, 출생차트야. 성격적 강점과 약점을 분석해줘.<br />
               <span className="text-gray-400">[복사한 데이터 붙여넣기]</span>
             </ExampleBox>
           </div>
           <div>
-            <p className="text-xs font-medium text-gray-500 mb-1">고민 상담</p>
+            <p className="text-xs font-medium text-gray-400 mb-1">고민 상담</p>
             <ExampleBox>
               아래 명반 데이터를 기반으로, 내가 살면서 힘들 수 있는 부분 Top 3를 뽑고 조언해줘.<br />
               <span className="text-gray-400">[복사한 데이터 붙여넣기]</span>
             </ExampleBox>
           </div>
           <div>
-            <p className="text-xs font-medium text-gray-500 mb-1">궁합 보기</p>
+            <p className="text-xs font-medium text-gray-400 mb-1">궁합 보기</p>
             <ExampleBox>
               두 사람의 명반 데이터를 보내줄게. 성격적으로 잘 맞는 부분과 부딪힐 수 있는 부분을 분석해줘.<br /><br />
               <span className="text-gray-400">[A의 데이터 붙여넣기]</span><br /><br />
@@ -61,39 +65,6 @@ export default function Guide() {
             </ExampleBox>
           </div>
         </div>
-      </section>
-
-      {/* 용어 설명 */}
-      <section className="bg-white rounded-lg border border-gray-200 p-5">
-        <h3 className="text-sm font-medium text-gray-700 mb-3">사주팔자·자미두수·출생차트란?</h3>
-        <dl className="text-sm text-gray-600 space-y-4">
-          <div>
-            <dt className="font-medium text-gray-700">四柱八字(사주팔자)</dt>
-            <dd className="mt-1">
-              태어난 연·월·일·시를 네 기둥(四柱), 여덟 글자(八字)로 표현하는 동양 명리학의 기본 체계입니다.
-              중국 당나라 시대에 체계화되어 약 1,300년의 역사를 가지고 있으며,
-              한국·중국·일본 등 동아시아 전역에서 널리 쓰이고 있습니다.
-              특히 한국에서는 가장 대중적인 명리 체계로, 일상에서 흔히 접할 수 있습니다.
-            </dd>
-          </div>
-          <div>
-            <dt className="font-medium text-gray-700">紫微斗數(자미두수)</dt>
-            <dd className="mt-1">
-              태어난 시간을 바탕으로 12궁에 별을 배치하여 운명을 분석하는 중국 전통 점성술입니다.
-              북송 시대 진희이(陳希夷)가 창시한 것으로 전해지며 약 1,000년의 역사를 가집니다.
-              대만과 홍콩에서 특히 인기가 높아 사주팔자보다 더 널리 활용되고 있으며,
-              동양의 점성술이라 불릴 만큼 서양 점성술과 유사한 구조를 갖추고 있습니다.
-            </dd>
-          </div>
-          <div>
-            <dt className="font-medium text-gray-700">Natal Chart(출생차트)</dt>
-            <dd className="mt-1">
-              태어난 순간의 하늘에서 태양·달·행성들이 어떤 별자리(12궁)에 위치했는지를 기록한 서양 점성술의 기본 차트입니다.
-              고대 그리스·로마 시대에 체계화되어 약 2,000년의 역사를 가지며, 현대에도 서양 문화권에서 널리 활용됩니다.
-              행성 위치 외에도 상승점(ASC), 하우스 배치, 행성 간 각도(애스펙트)를 종합적으로 분석합니다.
-            </dd>
-          </div>
-        </dl>
       </section>
     </div>
   )
