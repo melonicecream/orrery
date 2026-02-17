@@ -110,7 +110,7 @@ export default function App() {
         <Guide />
       </main>
       <footer className="text-center text-xs text-gray-400 py-6">
-        <p>&copy; 2026 Jang-Ho Hwang &middot; <a href="https://x.com/xrath" target="_blank" rel="noopener noreferrer" className="hover:text-gray-600">@xrath</a></p>
+        <p>&copy; 2026 Jang-Ho Hwang &middot; <a href="https://x.com/xrath" target="_blank" rel="noopener noreferrer" className="hover:text-gray-600">@xrath</a> &middot; <a href="https://x.com/xrath/status/2022548658562937028" target="_blank" rel="noopener noreferrer" className="hover:text-gray-600">소개글</a></p>
       </footer>
     </div>
   )
