@@ -3,6 +3,19 @@
   <h1>Orrery — 혼천의(渾天儀)</h1>
 </div>
 
+> **📢 AGPL-3.0 고지 및 변경 사항 (Modifications)**
+>
+> 본 프로젝트는 원본 Orrery를 포크하여 다음과 같은 기능을 추가 및 수정하였습니다. AGPL-3.0 라이선스에 따라 모든 변경 사항은 본 저장소를 통해 공개됩니다.
+>
+> 1. **API 서버 구현 (`server.ts`)**: 클라이언트 전용이었던 계산 엔진을 HTTP API로 호출할 수 있도록 Bun 기반 서버를 추가했습니다.
+> 2. **LLM 최적화 (TOON 포맷)**: LLM 분석 시 토큰을 절약하고 구조적 이해를 돕기 위해 `@toon-format/toon` 인코딩 기능을 통합했습니다.
+> 3. **데이터 시각화 지원**: 프론트엔드 시각화를 위해 TOON 포맷 외에도 원본 JSON 데이터를 함께 반환하도록 API 응답 구조를 개선했습니다.
+> 4. **환경 구성**: 비공개 서비스와의 통합을 위해 `.gitignore` 및 의존성 설정을 조정했습니다.
+>
+> *최종 수정일: 2026년 2월 21일*
+
+---
+
 브라우저 기반 명리학 도구. 사주팔자(四柱八字), 자미두수(紫微斗數), 서양 점성술 출생차트(Natal Chart)를 백엔드 없이 클라이언트에서 계산합니다.
 
 **[라이브 데모 →](https://rath.github.io/orrery/)**
@@ -43,6 +56,8 @@
 - 출생 위치 입력 (위도/경도, 서울 기본값)
 
 ### 공통
+- **[NEW]** API 서버 모드 지원 (`bun run server.ts`)
+- **[NEW]** LLM 최적화 TOON 데이터 출력
 - AI 에이전트용 텍스트 복사 (사주 + 자미두수 + 출생차트 일괄 복사)
 - 사용 가이드 및 용어 설명
 - 시간 모름 모드 (3주 계산)
@@ -54,8 +69,11 @@
 # 의존성 설치
 bun install
 
-# 개발 서버
+# 개발 서버 (Frontend)
 bun dev
+
+# API 서버 실행 (New)
+bun run server.ts
 
 # 빌드
 bun run build
@@ -69,7 +87,9 @@ bun test
 - React 19 + TypeScript 5
 - Vite 7
 - Tailwind CSS 4
+- Bun (Server runtime)
 - lunar-javascript (음력 변환)
+- @toon-format/toon (LLM Optimized notation)
 - Vitest (테스트)
 
 ## `@orrery/core` 맛보기

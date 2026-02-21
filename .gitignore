@@ -24,3 +24,6 @@ dist-ssr
 *.sln
 *.sw?
 .claude/
+
+# Private Demo App
+demo-client/
